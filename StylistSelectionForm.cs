@@ -17,8 +17,24 @@ namespace snippets
             InitializeComponent();
         }
         public static bool edit;
+        public static string StylistFirstName;
+        public static string StylistLastName;
         private void EditStylistButton_Click(object sender, EventArgs e)
         {
+            string[] name = ListofStylists.SelectedIndex.ToString().Split(' ');
+            for (int i = 0; i < name.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        StylistFirstName = name[i];
+                        break;
+                    case 1:
+                        StylistLastName = name[i];
+                        break;
+                }
+
+            }
             edit = true;
         }
     }

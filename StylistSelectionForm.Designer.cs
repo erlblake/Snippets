@@ -30,7 +30,7 @@
         {
             this.SearchButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.ListofStylists = new System.Windows.Forms.ListBox();
             this.EditStylistButton = new System.Windows.Forms.Button();
             this.NewStylist = new System.Windows.Forms.Button();
             this.AddChairButton = new System.Windows.Forms.Button();
@@ -53,14 +53,14 @@
             this.textBox1.Size = new System.Drawing.Size(768, 31);
             this.textBox1.TabIndex = 1;
             // 
-            // listBox1
+            // ListofStylists
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 25;
-            this.listBox1.Location = new System.Drawing.Point(50, 174);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(897, 604);
-            this.listBox1.TabIndex = 2;
+            this.ListofStylists.FormattingEnabled = true;
+            this.ListofStylists.ItemHeight = 25;
+            this.ListofStylists.Location = new System.Drawing.Point(50, 174);
+            this.ListofStylists.Name = "ListofStylists";
+            this.ListofStylists.Size = new System.Drawing.Size(897, 604);
+            this.ListofStylists.TabIndex = 2;
             // 
             // EditStylistButton
             // 
@@ -106,7 +106,7 @@
             this.Controls.Add(this.AddChairButton);
             this.Controls.Add(this.NewStylist);
             this.Controls.Add(this.EditStylistButton);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.ListofStylists);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.SearchButton);
             this.Name = "StylistSelectionForm";
@@ -120,7 +120,7 @@
 
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox ListofStylists;
         private System.Windows.Forms.Button EditStylistButton;
         private System.Windows.Forms.Button NewStylist;
         private System.Windows.Forms.Button AddChairButton;

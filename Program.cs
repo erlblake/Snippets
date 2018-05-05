@@ -16,7 +16,7 @@ namespace snippets
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BookingInformation());
+            Application.Run(new StylistInfo());
         }
     }
 }

@@ -42,7 +42,7 @@
             this.BalanceLabel = new System.Windows.Forms.Label();
             this.AcceptButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.StylistTransactions = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // FirstNameLabel
@@ -162,21 +162,21 @@
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // StylistTransactions
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 25;
-            this.listBox1.Location = new System.Drawing.Point(30, 414);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(906, 354);
-            this.listBox1.TabIndex = 15;
+            this.StylistTransactions.FormattingEnabled = true;
+            this.StylistTransactions.ItemHeight = 25;
+            this.StylistTransactions.Location = new System.Drawing.Point(30, 414);
+            this.StylistTransactions.Name = "StylistTransactions";
+            this.StylistTransactions.Size = new System.Drawing.Size(906, 354);
+            this.StylistTransactions.TabIndex = 15;
             // 
             // StylistInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(985, 1034);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.StylistTransactions);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.AcceptButton);
             this.Controls.Add(this.BalanceLabel);
@@ -214,6 +214,6 @@
         private System.Windows.Forms.Label BalanceLabel;
         private System.Windows.Forms.Button AcceptButton;
         private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox StylistTransactions;
     }
 }

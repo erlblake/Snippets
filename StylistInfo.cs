@@ -18,11 +18,10 @@ namespace snippets
             InitializeComponent();
 
         }
-
+        public List<stylistsandcustomers> ReadingInListOfStylists = new List<stylistsandcustomers>();
         public void ReadInTextFile()
         {
             string[] line = File.ReadAllLines("Listofinfo.txt");
-            List<stylistsandcustomers> ReadingInListOfStylists = new List<stylistsandcustomers>();
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
@@ -57,19 +56,16 @@ namespace snippets
                 ReadingInListOfStylists.Add(new stylistsandcustomers(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
 
                 //If edit selected stylist has been selected
-                if (StylistSelectionForm.edit == true)
-                {
-                    //Find the selected stylist in the list
-                    //Call the transactions for that stylist
-                }
+               
                 //Check they do not have the same first name and last name
-                else if (RFirstName == FirstNameTextBox.Text && RLastName == SurnameText.Text)
+                if (RFirstName == FirstNameTextBox.Text && RLastName == SurnameText.Text)
                 {
                     MessageBox.Show("This person already exists please enter a different firstname and lastname");
                     FirstNameTextBox.Clear();
                     SurnameText.Clear();
                 }
             }
+           
 
         }
 
@@ -115,9 +111,8 @@ namespace snippets
                 ReadingInListOfTransactions.Add(new Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
                 try
                 {
-                    //Finds the stylist in the list of transactions
-                    ReadingInListOfTransactions.Find(x => x.FirstName.Contains(RFirstName) && x.LastName.Contains(RLastName));
-                    
+                    //Finds the stylist and adds transactions 
+                   StylistTransactions.Items.Add(ReadingInListOfTransactions.Find(x => x.FirstName.Contains(RFirstName) && x.LastName.Contains(RLastName)));          
                 }
                 catch
                 {
@@ -128,6 +123,14 @@ namespace snippets
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
+            if (StylistSelectionForm.edit == true)
+            {
+                string SelectedStylistFirstName = StylistSelectionForm.StylistFirstName;
+                string SelectedStylistLastName = StylistSelectionForm.StylistLastName;
+                //Find the selected stylist in the list
+                //Call the transactions for that stylist
+                ReadInTransactionsTextFile();
+            }
             if (IsValidEmail(EmailText.Text))
             {
                 MessageBox.Show("Email address is not valid");
@@ -138,20 +141,24 @@ namespace snippets
                 MessageBox.Show("The length of your phone number must be 11 digits");
                 PhoneNumberText.Clear();
             }
-            if (FirstNameTextBox.Text != " " || SurnameText.Text != " " || EmailText.Text != " " || PhoneNumberText.Text != " " || HourlyRateText.Text != " ")
+            if (FirstNameTextBox.Text == " " || SurnameText.Text == " " || EmailText.Text == " " || PhoneNumberText.Text == " " || HourlyRateText.Text == " ")
             {
                 ReadInTextFile();
-                //have to search through the list find the surname and last name 
-                //delete that record, then re-add it with the new information
                 List<stylistsandcustomers> ListofStylists = new List<stylistsandcustomers>();
                 ListofStylists.Add(new stylistsandcustomers((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, int.Parse(PhoneNumberText.Text), double.Parse(HourlyRateText.Text)));
-                //For Transactions:
-                ReadInTransactionsTextFile();
-                //read textfile
-                //Search through transactions list and find that person
-                //
+                //Add to textfile
+                using (StreamWriter tw = new StreamWriter("ListofStylists.txt", true))
+                {
+
+                    foreach (stylistsandcustomers s in ListofStylists)
+                    {
+                        tw.WriteLine(s.FirstName + "," + s.LastName+ "," + s.Email + "," + s.PhoneNumber + "," + s.HourlyRate);
+                        tw.Close();
+                    }
+                }
+                MessageBox.Show("Stylist has been added/edited");
             }
-            else
+            else if(FirstNameTextBox.Text != " " || SurnameText.Text != " " || EmailText.Text != " " || PhoneNumberText.Text != " " || HourlyRateText.Text != " ")
             {
                 MessageBox.Show("Please fill in all the textboxes");
             }
@@ -159,7 +166,6 @@ namespace snippets
 
         }
         //Re do it!!
-        //Make sure email is valid
         bool IsValidEmail(string email)
         {
             try
