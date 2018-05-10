@@ -18,45 +18,49 @@ namespace snippets
             InitializeComponent();
 
         }
-        public List<stylistsandcustomers> ReadingInListOfStylists = new List<stylistsandcustomers>();
+        public List<SnippetsBackend.Stylist> ReadingInListOfStylists = new List<SnippetsBackend.Stylist>();
         public void ReadInTextFile()
         {
-            string[] line = File.ReadAllLines("Listofinfo.txt");
+            string[] line = File.ReadAllLines("ListofStylists.txt");
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
             string REmail = "";
-            int RPhoneNumber = 0;
+            Int64 RPhoneNumber = 0;
             double RHourlyRate = 0;
-
-            for (int i = 0; i < line.Length; i++)
+            int i = 0;
+            for (i = 0; i < line.Length; i++)
             {
                 oneline = line[i].Split(',');
-                for (int x = 0; x < oneline.Length; x++)
-                {
-                    switch (x)
+            }
+                
+                    for (int x = 0; x < line.Length; x++)
                     {
-                        case 0:
-                            RFirstName = oneline[x];
-                            break;
-                        case 1:
-                            RLastName = oneline[x];
-                            break;
-                        case 2:
-                            REmail = oneline[x];
-                            break;
-                        case 3:
-                            RPhoneNumber = int.Parse(oneline[x]);
-                            break;
-                        case 4:
-                            RHourlyRate = double.Parse(oneline[x]);
-                            break;
+                        switch (x)
+                        {
+                            case 0:
+                                RFirstName = line[x];
+                                break;
+                            case 1:
+                                RLastName = line[x];
+                                break;
+                            case 2:
+                                REmail = line[x];
+                                break;
+                            case 3:
+                                RPhoneNumber = Int64.Parse(line[x]);
+                                break;
+                            case 4:
+                                RHourlyRate = double.Parse(line[x]);
+                                break;
+                        }
                     }
-                }
-                ReadingInListOfStylists.Add(new stylistsandcustomers(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
+                
+            
+            
+                ReadingInListOfStylists.Add(new SnippetsBackend.Stylist(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
 
-                //If edit selected stylist has been selected
-               
+                //If edit selected stylist has been selected         
                 //Check they do not have the same first name and last name
                 if (RFirstName == FirstNameTextBox.Text && RLastName == SurnameText.Text)
                 {
@@ -65,14 +69,12 @@ namespace snippets
                     SurnameText.Clear();
                 }
             }
-           
-
-        }
+        
 
         public void ReadInTransactionsTextFile()
         {
             string[] line = File.ReadAllLines("Transactions.txt");
-            List<Transaction> ReadingInListOfTransactions = new List<Transaction>();
+            List<SnippetsBackend.Transaction> ReadingInListOfTransactions = new List<SnippetsBackend.Transaction>();
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
@@ -108,7 +110,7 @@ namespace snippets
                             break;
                     }
                 }
-                ReadingInListOfTransactions.Add(new Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
+                ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
                 try
                 {
                     //Finds the stylist and adds transactions 
@@ -127,30 +129,42 @@ namespace snippets
             {
                 string SelectedStylistFirstName = StylistSelectionForm.StylistFirstName;
                 string SelectedStylistLastName = StylistSelectionForm.StylistLastName;
-                //Find the selected stylist in the list
+                //Find the selected stylist in the list of stylists
+                          
+                for (int i = 0; i < ReadingInListOfStylists.Count; i++)
+                {
+                    if(ReadingInListOfStylists[i].ToString() == SelectedStylistFirstName && ReadingInListOfStylists[i++].ToString() == SelectedStylistLastName)
+                    {
+                        FirstNameTextBox.Text = SelectedStylistFirstName;
+                        SurnameText.Text = SelectedStylistFirstName;
+                        EmailText.Text = ReadingInListOfStylists[i + 2].ToString();
+                        PhoneNumberText.Text = ReadingInListOfStylists[i + 3].ToString();
+                        HourlyRateText.Text = ReadingInListOfStylists[i + 4].ToString();
+                    }
+                }
                 //Call the transactions for that stylist
                 ReadInTransactionsTextFile();
             }
-            if (IsValidEmail(EmailText.Text))
+            if (IsValidEmail(EmailText.Text) == false)
             {
-                MessageBox.Show("Email address is not valid");
                 EmailText.Clear();
+                MessageBox.Show("Email address is not valid");
             }
             else if (PhoneNumberText.Text.Length != 11)
             {
                 MessageBox.Show("The length of your phone number must be 11 digits");
                 PhoneNumberText.Clear();
             }
-            if (FirstNameTextBox.Text == " " || SurnameText.Text == " " || EmailText.Text == " " || PhoneNumberText.Text == " " || HourlyRateText.Text == " ")
+            if (FirstNameTextBox.Text != "" && SurnameText.Text != "" && EmailText.Text != "" && PhoneNumberText.Text != "" && HourlyRateText.Text != "")
             {
                 ReadInTextFile();
-                List<stylistsandcustomers> ListofStylists = new List<stylistsandcustomers>();
-                ListofStylists.Add(new stylistsandcustomers((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, int.Parse(PhoneNumberText.Text), double.Parse(HourlyRateText.Text)));
+                List<SnippetsBackend.Stylist> ListofStylists = new List<SnippetsBackend.Stylist>();
+                ListofStylists.Add(new SnippetsBackend.Stylist((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, Int64.Parse(PhoneNumberText.Text), double.Parse(HourlyRateText.Text)));
                 //Add to textfile
                 using (StreamWriter tw = new StreamWriter("ListofStylists.txt", true))
                 {
 
-                    foreach (stylistsandcustomers s in ListofStylists)
+                    foreach (SnippetsBackend.Stylist s in ListofStylists)
                     {
                         tw.WriteLine(s.FirstName + "," + s.LastName+ "," + s.Email + "," + s.PhoneNumber + "," + s.HourlyRate);
                         tw.Close();
@@ -158,20 +172,30 @@ namespace snippets
                 }
                 MessageBox.Show("Stylist has been added/edited");
             }
-            else if(FirstNameTextBox.Text != " " || SurnameText.Text != " " || EmailText.Text != " " || PhoneNumberText.Text != " " || HourlyRateText.Text != " ")
+            else if(FirstNameTextBox.Text == "" || SurnameText.Text == "" || EmailText.Text == "" || PhoneNumberText.Text == "" || HourlyRateText.Text == "")
             {
                 MessageBox.Show("Please fill in all the textboxes");
             }
 
 
         }
-        //Re do it!!
         bool IsValidEmail(string email)
         {
             try
             {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
+                int indexofat = EmailText.Text.IndexOf("@");
+                int indexofdot = EmailText.Text.IndexOf(".");
+                {
+                    if(indexofat > indexofdot)
+                    {
+                        return false;
+
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
             }
             catch
             {

@@ -79,15 +79,15 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
                 StylistandRate.TryGetValue(DropDownListofStylists.SelectedIndex.ToString(), out rate);
             }
             //add information to transaction list
-            List<Transaction> ListofTransactions = new List<Transaction>();
+            List<SnippetsBackend.Transaction> ListofTransactions = new List<SnippetsBackend.Transaction>();
             //Adding transaction of customer 
-            ListofTransactions.Add(new Transaction(FirstName, LastName, "Appointment with " + DropDownListofStylists.SelectedIndex.ToString(), dateTimePicker1.Text, DurationList.SelectedIndex, rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "Appointment with " + DropDownListofStylists.SelectedIndex.ToString(), dateTimePicker1.Text, DurationList.SelectedIndex, rate));
             //Adding information of stylist
-            ListofTransactions.Add(new Transaction(StylistFirstName, StylsitLastName, "Booking with " + CustomerName, dateTimePicker1.Text, DurationList.SelectedIndex, rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Booking with " + CustomerName, dateTimePicker1.Text, DurationList.SelectedIndex, rate));
             //write the information to a textile
             using (StreamWriter tw = new StreamWriter("Transactions.txt", true))
             {
-                foreach(Transaction t in ListofTransactions)
+                foreach(SnippetsBackend.Transaction t in ListofTransactions)
                 {
                     tw.WriteLine(t.FirstName, t.LastName, t.ChairOrAppointment, t.DateandTime, t.Duration, t.Rate);
                     tw.Close();

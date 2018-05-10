@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace snippets
+    //Need to read in the list of stylists from listofinfo
 {
-    public partial class StylistSelectionForm : Form
+    public partial class StylistSelectionForm : Form 
     {
         public StylistSelectionForm()
         {
             InitializeComponent();
+            
         }
         public static bool edit;
         public static string StylistFirstName;
@@ -36,6 +38,7 @@ namespace snippets
 
             }
             edit = true;
+            Application.Run(new StylistInfo());
         }
     }
 }
