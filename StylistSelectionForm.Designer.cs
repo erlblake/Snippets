@@ -61,6 +61,7 @@
             this.ListofStylists.Name = "ListofStylists";
             this.ListofStylists.Size = new System.Drawing.Size(897, 604);
             this.ListofStylists.TabIndex = 2;
+            this.ListofStylists.SelectedIndexChanged += new System.EventHandler(this.ListofStylists_SelectedIndexChanged);
             // 
             // EditStylistButton
             // 

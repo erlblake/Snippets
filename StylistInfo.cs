@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -54,14 +55,9 @@ namespace snippets
                                 RHourlyRate = double.Parse(line[x]);
                                 break;
                         }
-                    }
-                
-            
-            
+                    }         
                 ReadingInListOfStylists.Add(new SnippetsBackend.Stylist(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
-
-                //If edit selected stylist has been selected         
-                //Check they do not have the same first name and last name
+                //If edit selected stylist has been selected, check they do not have the same first name and last name
                 if (RFirstName == FirstNameTextBox.Text && RLastName == SurnameText.Text)
                 {
                     MessageBox.Show("This person already exists please enter a different firstname and lastname");
@@ -70,7 +66,6 @@ namespace snippets
                 }
             }
         
-
         public void ReadInTransactionsTextFile()
         {
             string[] line = File.ReadAllLines("Transactions.txt");
@@ -122,6 +117,29 @@ namespace snippets
                 }
             }
         }
+        public void EditStylistClicked()
+        {
+            if (StylistSelectionForm.edit == true)
+            {
+                ReadInTextFile();
+                string SelectedStylistFirstName = StylistSelectionForm.StylistFirstName;
+                string SelectedStylistLastName = StylistSelectionForm.StylistLastName;
+                //Find the selected stylist in the list of stylists                 
+                for (int i = 0; i < ReadingInListOfStylists.Count; i++)
+                {
+                    if (ReadingInListOfStylists[i].ToString() == SelectedStylistFirstName && ReadingInListOfStylists[i++].ToString() == SelectedStylistLastName)
+                    {
+                        FirstNameTextBox.Text = SelectedStylistFirstName;
+                        SurnameText.Text = SelectedStylistFirstName;
+                        EmailText.Text = ReadingInListOfStylists[i + 2].ToString();
+                        PhoneNumberText.Text = ReadingInListOfStylists[i + 3].ToString();
+                        HourlyRateText.Text = ReadingInListOfStylists[i + 4].ToString();
+                    }
+                }
+                //Call the transactions for that stylist
+                ReadInTransactionsTextFile();
+            }
+        }
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
@@ -129,8 +147,7 @@ namespace snippets
             {
                 string SelectedStylistFirstName = StylistSelectionForm.StylistFirstName;
                 string SelectedStylistLastName = StylistSelectionForm.StylistLastName;
-                //Find the selected stylist in the list of stylists
-                          
+                //Find the selected stylist in the list of stylists                 
                 for (int i = 0; i < ReadingInListOfStylists.Count; i++)
                 {
                     if(ReadingInListOfStylists[i].ToString() == SelectedStylistFirstName && ReadingInListOfStylists[i++].ToString() == SelectedStylistLastName)
@@ -171,13 +188,16 @@ namespace snippets
                     }
                 }
                 MessageBox.Show("Stylist has been added/edited");
+                FirstNameTextBox.Clear();
+                SurnameText.Clear();
+                EmailText.Clear();
+                PhoneNumberText.Clear();
+                HourlyRateText.Clear();
             }
             else if(FirstNameTextBox.Text == "" || SurnameText.Text == "" || EmailText.Text == "" || PhoneNumberText.Text == "" || HourlyRateText.Text == "")
             {
                 MessageBox.Show("Please fill in all the textboxes");
             }
-
-
         }
         bool IsValidEmail(string email)
         {
@@ -186,10 +206,14 @@ namespace snippets
                 int indexofat = EmailText.Text.IndexOf("@");
                 int indexofdot = EmailText.Text.IndexOf(".");
                 {
-                    if(indexofat > indexofdot)
+                    if(Regex.IsMatch(email, @"^[^0-9]+$") == false)
+                    {
+                        MessageBox.Show("An email should only contain numbers");
+                        EmailText.Clear();
+                    }
+                    if (indexofat > indexofdot)
                     {
                         return false;
-
                     }
                     else
                     {
@@ -201,6 +225,11 @@ namespace snippets
             {
                 return false;
             }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
