@@ -81,6 +81,7 @@
             this.NewStylist.TabIndex = 4;
             this.NewStylist.Text = "Add New Stylist";
             this.NewStylist.UseVisualStyleBackColor = true;
+            this.NewStylist.Click += new System.EventHandler(this.NewStylist_Click);
             // 
             // AddChairButton
             // 

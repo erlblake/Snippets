@@ -87,7 +87,11 @@ namespace snippets
 
     
         }
-    
 
-}
+        private void NewStylist_Click(object sender, EventArgs e)
+        {
+            StylistInfo Stylist = new StylistInfo();
+            Stylist.Show();
+        }
+    }
 }
