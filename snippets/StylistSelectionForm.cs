@@ -41,8 +41,10 @@ namespace snippets
 
             }
             edit = true;
+            Hide();
             StylistInfo Stylist = new StylistInfo();
             Stylist.EditStylistClicked();
+            Stylist.Closed += (s, args) => this.Close();
             Stylist.Show();
         }
 
@@ -83,15 +85,16 @@ namespace snippets
                 }
              string StylistsName = RFirstName +" " + RLastName;
             ReadingInListOfStylists.Add(StylistsName);
-            }
-
-    
+            }  
         }
 
         private void NewStylist_Click(object sender, EventArgs e)
         {
+            this.Hide();
             StylistInfo Stylist = new StylistInfo();
+            Stylist.Closed += (s, args) => this.Close();            
             Stylist.Show();
+            
         }
     }
 }

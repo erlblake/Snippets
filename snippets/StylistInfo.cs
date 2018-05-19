@@ -19,7 +19,7 @@ namespace snippets
             InitializeComponent();
 
         }
-        public List<SnippetsBackend.Stylist> ReadingInListOfStylists = new List<SnippetsBackend.Stylist>();
+        public List<SnippetsBackend.Stylist> ListofStylists = new List<SnippetsBackend.Stylist>();
         public void ReadInTextFile()
         {
             string[] line = File.ReadAllLines("ListofStylists.txt");
@@ -55,7 +55,7 @@ namespace snippets
                             break;
                     }
                 }
-                ReadingInListOfStylists.Add(new SnippetsBackend.Stylist(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
+                ListofStylists.Add(new SnippetsBackend.Stylist(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
                 bool textboxesfilled = false;
 
                 //If edit selected stylist has been selected, check they do not have the same first name and last name
@@ -147,6 +147,14 @@ namespace snippets
                 ReadInTextFile();
                 //Call the transactions for that stylist
                 ReadInTransactionsTextFile();
+                string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " "+ EmailText.Text + " "+ PhoneNumberText.Text + " " + HourlyRateText.Text;
+                for (int i = 0; i < ListofStylists.Count; i++)
+                {
+                    if (ListofStylists[i].ToString() == stylistinfo)
+                    {
+                        ListofStylists.RemoveAt(i);
+                    }
+                }
             }
         }
 
@@ -164,18 +172,20 @@ namespace snippets
             }
             if (FirstNameTextBox.Text != "" && SurnameText.Text != "" && EmailText.Text != "" && PhoneNumberText.Text != "" && HourlyRateText.Text != "")
             {
-                ReadInTextFile();
-                List<SnippetsBackend.Stylist> ListofStylists = new List<SnippetsBackend.Stylist>();
+                if (StylistSelectionForm.edit == false)
+                {
+                    ReadInTextFile();
+                }
                 ListofStylists.Add(new SnippetsBackend.Stylist((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, Int64.Parse(PhoneNumberText.Text), double.Parse(HourlyRateText.Text)));
                 //Add to textfile
-                using (StreamWriter tw = new StreamWriter("ListofStylists.txt", true))
+                using (StreamWriter tw = new StreamWriter("ListofStylists.txt", false))
                 {
 
                     foreach (SnippetsBackend.Stylist s in ListofStylists)
                     {
                         tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.Email + "," + s.PhoneNumber + "," + s.HourlyRate);
-                        tw.Close();
-                    }
+                        
+                    }tw.Close();
                 }
                 MessageBox.Show("Stylist has been added/edited");
                 FirstNameTextBox.Clear();

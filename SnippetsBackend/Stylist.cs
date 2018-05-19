@@ -13,5 +13,11 @@ namespace SnippetsBackend
         {
             this.HourlyRate = HourlyRate;
         }
+
+        public override string ToString()
+        {
+            string stylistinformation = FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + HourlyRate;
+            return stylistinformation;
+        }
     }
 }
