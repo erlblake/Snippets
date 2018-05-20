@@ -8,7 +8,7 @@ namespace SnippetsBackend
 {
     public class Customers : Person
     {
-        public Customers(string FirstName, string LastName, string Email, int PhoneNumber) : base(FirstName, LastName, Email, PhoneNumber)
+        public Customers(string FirstName, string LastName, string Email, string PhoneNumber) : base(FirstName, LastName, Email, PhoneNumber)
         {
 
         }

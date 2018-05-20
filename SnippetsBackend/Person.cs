@@ -11,9 +11,9 @@ namespace SnippetsBackend
         public string FirstName;
         public string LastName;
         public string Email;
-        public Int64 PhoneNumber;
+        public string PhoneNumber;
 
-        public Person(string FirstName, string LastName, string Email, Int64 PhoneNumber)
+        public Person(string FirstName, string LastName, string Email, string PhoneNumber)
         {
             this.FirstName = FirstName;
             this.LastName = LastName;

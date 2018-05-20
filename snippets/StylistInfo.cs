@@ -27,7 +27,7 @@ namespace snippets
             string RFirstName = "";
             string RLastName = "";
             string REmail = "";
-            Int64 RPhoneNumber = 0;
+            string RPhoneNumber = "";
             double RHourlyRate = 0;
             int i = 0;
             for (i = 0; i < line.Length; i++)
@@ -48,7 +48,7 @@ namespace snippets
                             REmail = oneline[x];
                             break;
                         case 3:
-                            RPhoneNumber = Int64.Parse(oneline[x]);
+                            RPhoneNumber = oneline[x];
                             break;
                         case 4:
                             RHourlyRate = double.Parse(oneline[x]);
@@ -176,7 +176,7 @@ namespace snippets
                 {
                     ReadInTextFile();
                 }
-                ListofStylists.Add(new SnippetsBackend.Stylist((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, Int64.Parse(PhoneNumberText.Text), double.Parse(HourlyRateText.Text)));
+                ListofStylists.Add(new SnippetsBackend.Stylist((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, PhoneNumberText.Text, double.Parse(HourlyRateText.Text)));
                 //Add to textfile
                 using (StreamWriter tw = new StreamWriter("ListofStylists.txt", false))
                 {
@@ -199,7 +199,7 @@ namespace snippets
                 MessageBox.Show("Please fill in all the textboxes");
             }
         }
-        bool IsValidEmail(string email)
+       public bool IsValidEmail(string email)
         {
             try
             {

@@ -32,8 +32,6 @@
             this.AcceptButton = new System.Windows.Forms.Button();
             this.BalanceLabel = new System.Windows.Forms.Label();
             this.AppointmentsLabel = new System.Windows.Forms.Label();
-            this.HourlyRateText = new System.Windows.Forms.TextBox();
-            this.HourlyLabel = new System.Windows.Forms.Label();
             this.PhoneNumberText = new System.Windows.Forms.TextBox();
             this.PhoneLabel = new System.Windows.Forms.Label();
             this.EmailText = new System.Windows.Forms.TextBox();
@@ -62,6 +60,7 @@
             this.AcceptButton.TabIndex = 28;
             this.AcceptButton.Text = "Accept";
             this.AcceptButton.UseVisualStyleBackColor = true;
+            this.AcceptButton.Click += new System.EventHandler(this.AcceptButton_Click);
             // 
             // BalanceLabel
             // 
@@ -80,22 +79,6 @@
             this.AppointmentsLabel.Size = new System.Drawing.Size(143, 25);
             this.AppointmentsLabel.TabIndex = 25;
             this.AppointmentsLabel.Text = "Appointments";
-            // 
-            // HourlyRateText
-            // 
-            this.HourlyRateText.Location = new System.Drawing.Point(850, 240);
-            this.HourlyRateText.Name = "HourlyRateText";
-            this.HourlyRateText.Size = new System.Drawing.Size(100, 31);
-            this.HourlyRateText.TabIndex = 24;
-            // 
-            // HourlyLabel
-            // 
-            this.HourlyLabel.AutoSize = true;
-            this.HourlyLabel.Location = new System.Drawing.Point(706, 246);
-            this.HourlyLabel.Name = "HourlyLabel";
-            this.HourlyLabel.Size = new System.Drawing.Size(125, 25);
-            this.HourlyLabel.TabIndex = 23;
-            this.HourlyLabel.Text = "Hourly Rate";
             // 
             // PhoneNumberText
             // 
@@ -180,8 +163,6 @@
             this.Controls.Add(this.AcceptButton);
             this.Controls.Add(this.BalanceLabel);
             this.Controls.Add(this.AppointmentsLabel);
-            this.Controls.Add(this.HourlyRateText);
-            this.Controls.Add(this.HourlyLabel);
             this.Controls.Add(this.PhoneNumberText);
             this.Controls.Add(this.PhoneLabel);
             this.Controls.Add(this.EmailText);
@@ -203,8 +184,6 @@
         private System.Windows.Forms.Button AcceptButton;
         private System.Windows.Forms.Label BalanceLabel;
         private System.Windows.Forms.Label AppointmentsLabel;
-        private System.Windows.Forms.TextBox HourlyRateText;
-        private System.Windows.Forms.Label HourlyLabel;
         private System.Windows.Forms.TextBox PhoneNumberText;
         private System.Windows.Forms.Label PhoneLabel;
         private System.Windows.Forms.TextBox EmailText;

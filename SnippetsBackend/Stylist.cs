@@ -9,7 +9,7 @@ namespace SnippetsBackend
    public class Stylist : Person
     {
         public double HourlyRate;
-        public Stylist(string FirstName, string LastName, string Email, Int64 PhoneNumber, double HourlyRate) : base(FirstName, LastName, Email, PhoneNumber)
+        public Stylist(string FirstName, string LastName, string Email, string PhoneNumber, double HourlyRate) : base(FirstName, LastName, Email, PhoneNumber)
         {
             this.HourlyRate = HourlyRate;
         }
