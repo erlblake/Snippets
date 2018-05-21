@@ -160,12 +160,8 @@ namespace snippets
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
-            if (IsValidEmail(EmailText.Text) == false)
-            {
-                EmailText.Clear();
-                MessageBox.Show("Email address is not valid");
-            }
-            else if (PhoneNumberText.Text.Length != 11)
+            IsValidEmail(EmailText.Text);
+            if (PhoneNumberText.Text.Length != 11)
             {
                 MessageBox.Show("The length of your phone number must be 11 digits");
                 PhoneNumberText.Clear();

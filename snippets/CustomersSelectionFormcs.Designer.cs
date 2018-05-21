@@ -54,6 +54,7 @@
             this.NewCustomer.TabIndex = 11;
             this.NewCustomer.Text = "Add New Customer";
             this.NewCustomer.UseVisualStyleBackColor = true;
+            this.NewCustomer.Click += new System.EventHandler(this.NewCustomer_Click);
             // 
             // EditCustomerButton
             // 
@@ -73,6 +74,7 @@
             this.CustomerSelectionListBox.Name = "CustomerSelectionListBox";
             this.CustomerSelectionListBox.Size = new System.Drawing.Size(897, 604);
             this.CustomerSelectionListBox.TabIndex = 9;
+            this.CustomerSelectionListBox.SelectedIndexChanged += new System.EventHandler(this.CustomerSelectionListBox_SelectedIndexChanged);
             // 
             // textBox1
             // 

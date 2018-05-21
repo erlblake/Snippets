@@ -21,19 +21,18 @@ namespace snippets
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
-            if(IsValidEmail(EmailText.Text) == false)
-            {
-                EmailText.Clear();
-                MessageBox.Show("Email address is not valid");
-            }
-            else if (PhoneNumberText.Text.Length != 11)
+            IsValidEmail(EmailText.Text);
+            if (PhoneNumberText.Text.Length != 11)
             {
                 MessageBox.Show("The length of your phone number must be 11 digits");
                 PhoneNumberText.Clear();
             }
             if (FirstNameTextBox.Text != "" && SurnameText.Text != "" && EmailText.Text != "" && PhoneNumberText.Text != "")
             {
-               
+                if (CustomersSelectionFormcs.edit == false)
+                {
+                    ReadInTextFile();
+                }
                 ListofCustomers.Add(new SnippetsBackend.Customers((FirstNameTextBox.Text), SurnameText.Text, EmailText.Text, PhoneNumberText.Text));
                 //Add to textfile
                 using (StreamWriter tw = new StreamWriter("ListofCustomers.txt", false))
@@ -42,7 +41,6 @@ namespace snippets
                     foreach (SnippetsBackend.Customers s in ListofCustomers)
                     {
                         tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.Email + "," + s.PhoneNumber);
-
                     }
                     tw.Close();
                 }
@@ -100,12 +98,43 @@ namespace snippets
                 //If the edit customer button has been clicked
                 if (textboxesfilled == false)
                 {
-                
+                    if (CustomersSelectionFormcs.edit == true)
+                    {
+                        string SelectedCustomerFirstName = CustomersSelectionFormcs.CustomerFirstName;
+                        string SelectedCustomerLastName = CustomersSelectionFormcs.CustomerLastName;
+                        if (RFirstName == SelectedCustomerFirstName && RLastName == SelectedCustomerLastName)
+                        {
+                            FirstNameTextBox.Text = SelectedCustomerFirstName;
+                            SurnameText.Text = SelectedCustomerLastName;
+                            EmailText.Text = REmail;
+                            PhoneNumberText.Text = RPhoneNumber.ToString();
+                            textboxesfilled = true;
+                        }
+                    }
 
                 }
 
             }
         }
+
+        public void EditCustomerClicked()
+        {
+            if (CustomersSelectionFormcs.edit == true)
+            {
+                ReadInTextFile();
+                //Call the transactions for that stylist
+                //ReadInTransactionsTextFile();
+                string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " " + EmailText.Text + " " + PhoneNumberText.Text + " ";
+                for (int i = 0; i < ListofCustomers.Count; i++)
+                {
+                    if (ListofCustomers[i].ToString() == stylistinfo)
+                    {
+                        ListofCustomers.RemoveAt(i);
+                    }
+                }
+            }
+        }
+
         public bool IsValidEmail(string email)
         {
             try
