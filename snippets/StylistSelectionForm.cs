@@ -96,5 +96,19 @@ namespace snippets
             Stylist.Show();
             
         }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            //Get the first three characters of the string that has been entered
+            char[] stylistsearchsplit = StylistSearch.Text.ToCharArray();
+            string threecharsofstylist = "";
+            for (int i = 0; i < 3; i++)
+            {
+                threecharsofstylist += stylistsearchsplit[i];
+            }
+
+            //Go through readinginstylists to see if any of the strings contain these three chars
+           //Add the matches to the listbox
+        }
     }
 }

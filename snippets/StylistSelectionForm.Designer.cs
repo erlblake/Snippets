@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.SearchButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.StylistSearch = new System.Windows.Forms.TextBox();
             this.ListofStylists = new System.Windows.Forms.ListBox();
             this.EditStylistButton = new System.Windows.Forms.Button();
             this.NewStylist = new System.Windows.Forms.Button();
@@ -45,13 +45,14 @@
             this.SearchButton.TabIndex = 0;
             this.SearchButton.Text = "Search";
             this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
-            // textBox1
+            // StylistSearch
             // 
-            this.textBox1.Location = new System.Drawing.Point(179, 90);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(768, 31);
-            this.textBox1.TabIndex = 1;
+            this.StylistSearch.Location = new System.Drawing.Point(179, 90);
+            this.StylistSearch.Name = "StylistSearch";
+            this.StylistSearch.Size = new System.Drawing.Size(768, 31);
+            this.StylistSearch.TabIndex = 1;
             // 
             // ListofStylists
             // 
@@ -109,7 +110,7 @@
             this.Controls.Add(this.NewStylist);
             this.Controls.Add(this.EditStylistButton);
             this.Controls.Add(this.ListofStylists);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.StylistSearch);
             this.Controls.Add(this.SearchButton);
             this.Name = "StylistSelectionForm";
             this.Text = "StylistSelectionForm";
@@ -121,7 +122,7 @@
         #endregion
 
         private System.Windows.Forms.Button SearchButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox StylistSearch;
         private System.Windows.Forms.ListBox ListofStylists;
         private System.Windows.Forms.Button EditStylistButton;
         private System.Windows.Forms.Button NewStylist;
