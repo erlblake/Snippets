@@ -99,12 +99,20 @@ namespace snippets
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
+            ListofStylists.Items.Clear();
             //Get the first three characters of the string that has been entered
             char[] stylistsearchsplit = StylistSearch.Text.ToCharArray();
             string threecharsofstylist = "";
             for (int i = 0; i < 3; i++)
             {
                 threecharsofstylist += stylistsearchsplit[i];
+            }
+            for (int i = 0; i < ReadingInListOfStylists.Count; i++)
+            {
+                if (ReadingInListOfStylists[i].Contains(threecharsofstylist))
+                {
+                    ListofStylists.Items.Add(ReadingInListOfStylists[i]);
+                }
             }
 
             //Go through readinginstylists to see if any of the strings contain these three chars
