@@ -44,7 +44,7 @@ namespace snippets
             Hide();
             StylistInfo Stylist = new StylistInfo();
             Stylist.EditStylistClicked();
-            Stylist.Closed += (s, args) => this.Close();
+            Stylist.Closed += (s, args) => this.Show();
             Stylist.Show();
         }
 
@@ -93,30 +93,35 @@ namespace snippets
             this.Hide();
             StylistInfo Stylist = new StylistInfo();
             Stylist.Closed += (s, args) => this.Close();            
-            Stylist.Show();
-            
+            Stylist.Show();            
         }
 
+        //Make this into a method that can be called from both stylist and customer
         private void SearchButton_Click(object sender, EventArgs e)
         {
             ListofStylists.Items.Clear();
-            //Get the first three characters of the string that has been entered
-            char[] stylistsearchsplit = StylistSearch.Text.ToCharArray();
+            int lengthofstring = 0;
+            char[] stylistsearchsplit = StylistSearch.Text.ToLower().ToCharArray();
             string threecharsofstylist = "";
-            for (int i = 0; i < 3; i++)
+            if(StylistSearch.Text.Length < 3)
+            {
+                lengthofstring = StylistSearch.Text.Length;
+            }
+            else
+            {
+                lengthofstring = 3;
+            }
+            for (int i = 0; i < lengthofstring; i++)
             {
                 threecharsofstylist += stylistsearchsplit[i];
             }
             for (int i = 0; i < ReadingInListOfStylists.Count; i++)
             {
-                if (ReadingInListOfStylists[i].Contains(threecharsofstylist))
+                if (ReadingInListOfStylists[i].ToLower().Contains(threecharsofstylist))
                 {
                     ListofStylists.Items.Add(ReadingInListOfStylists[i]);
                 }
             }
-
-            //Go through readinginstylists to see if any of the strings contain these three chars
-           //Add the matches to the listbox
         }
     }
 }
