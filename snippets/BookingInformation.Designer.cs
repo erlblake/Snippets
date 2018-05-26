@@ -55,6 +55,7 @@
             this.DropDownListofStylists.Name = "DropDownListofStylists";
             this.DropDownListofStylists.Size = new System.Drawing.Size(199, 33);
             this.DropDownListofStylists.TabIndex = 1;
+            this.DropDownListofStylists.SelectedIndexChanged += new System.EventHandler(this.DropDownListofStylists_SelectedIndexChanged);
             // 
             // listBox1
             // 

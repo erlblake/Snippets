@@ -172,6 +172,38 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
         {
          
         }
+
+        private void DropDownListofStylists_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        public List<string> ReadingInListOfStylists = new List<string>();
+        public void ReadInTextFile()
+        {
+            string[] line = File.ReadAllLines("ListofStylists.txt");
+            string[] oneline;
+            string RFirstName = "";
+            string RLastName = "";
+            int i = 0;
+            for (i = 0; i < line.Length; i++)
+            {
+                oneline = line[i].Split(',');
+                for (int x = 0; x < oneline.Length; x++)
+                {
+                    switch (x)
+                    {
+                        case 0:
+                            RFirstName = oneline[x];
+                            break;
+                        case 1:
+                            RLastName = oneline[x];
+                            break;
+                    }
+                }
+                string StylistsName = RFirstName + " " + RLastName;
+                ReadingInListOfStylists.Add(StylistsName);
+            }
+        }
     }
 }
 

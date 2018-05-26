@@ -61,7 +61,7 @@ namespace snippets
            
         }
         public List<string> ReadingInListOfStylists = new List<string>();
-        public void ReadInTextFile()
+        public                                                                                                                                                                                                 void ReadInTextFile()
         {
             string[] line = File.ReadAllLines("ListofStylists.txt");
             string[] oneline;
@@ -95,17 +95,13 @@ namespace snippets
             Stylist.Closed += (s, args) => this.Close();            
             Stylist.Show();            
         }
-
-        //Make this into a method that can be called from both stylist and customer
-        private void SearchButton_Click(object sender, EventArgs e)
+        public static string SearchMethod(char[] search, string searchlength)
         {
-            ListofStylists.Items.Clear();
             int lengthofstring = 0;
-            char[] stylistsearchsplit = StylistSearch.Text.ToLower().ToCharArray();
             string threecharsofstylist = "";
-            if(StylistSearch.Text.Length < 3)
+            if (searchlength.Length < 3)
             {
-                lengthofstring = StylistSearch.Text.Length;
+                lengthofstring = search.Length;
             }
             else
             {
@@ -113,11 +109,19 @@ namespace snippets
             }
             for (int i = 0; i < lengthofstring; i++)
             {
-                threecharsofstylist += stylistsearchsplit[i];
+                threecharsofstylist += search[i];
             }
+            return threecharsofstylist;
+        }
+        //Make this into a method that can be called from both stylist and customer
+        private void SearchButton_Click(object sender, EventArgs e)                                    
+        {
+            ListofStylists.Items.Clear();
+            char[] stylistsearchsplit = StylistSearch.Text.ToLower().ToCharArray();
+            string stylist = StylistSearch.Text;
             for (int i = 0; i < ReadingInListOfStylists.Count; i++)
             {
-                if (ReadingInListOfStylists[i].ToLower().Contains(threecharsofstylist))
+                if (ReadingInListOfStylists[i].ToLower().Contains(SearchMethod(stylistsearchsplit, stylist)))
                 {
                     ListofStylists.Items.Add(ReadingInListOfStylists[i]);
                 }

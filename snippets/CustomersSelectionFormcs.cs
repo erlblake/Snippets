@@ -103,5 +103,20 @@ namespace snippets
         {
             
         }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            CustomerSelectionListBox.Items.Clear();
+            char[] customerearchsplit = CustomerSelectionListBox.Text.ToLower().ToCharArray();
+            string customer = CustomerSelectionListBox.Text;
+            StylistSelectionForm.SearchMethod(customerearchsplit, customer);
+            for (int i = 0; i < ReadinginListofCustomers.Count; i++)
+            {
+                if (ReadinginListofCustomers[i].ToLower().Contains(StylistSelectionForm.SearchMethod(customerearchsplit, customer)))
+                {
+                    CustomerSelectionListBox.Items.Add(ReadinginListofCustomers[i]);
+                }
+            }
+        }
     }
 }
