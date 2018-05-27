@@ -32,7 +32,7 @@
             this.NewCustomer = new System.Windows.Forms.Button();
             this.EditCustomerButton = new System.Windows.Forms.Button();
             this.CustomerSelectionListBox = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.CustomerSearch = new System.Windows.Forms.TextBox();
             this.SearchButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -76,12 +76,12 @@
             this.CustomerSelectionListBox.TabIndex = 9;
             this.CustomerSelectionListBox.SelectedIndexChanged += new System.EventHandler(this.CustomerSelectionListBox_SelectedIndexChanged);
             // 
-            // textBox1
+            // CustomerSearch
             // 
-            this.textBox1.Location = new System.Drawing.Point(207, 103);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(768, 31);
-            this.textBox1.TabIndex = 8;
+            this.CustomerSearch.Location = new System.Drawing.Point(207, 103);
+            this.CustomerSearch.Name = "CustomerSearch";
+            this.CustomerSearch.Size = new System.Drawing.Size(768, 31);
+            this.CustomerSearch.TabIndex = 8;
             // 
             // SearchButton
             // 
@@ -102,7 +102,7 @@
             this.Controls.Add(this.NewCustomer);
             this.Controls.Add(this.EditCustomerButton);
             this.Controls.Add(this.CustomerSelectionListBox);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.CustomerSearch);
             this.Controls.Add(this.SearchButton);
             this.Name = "CustomersSelectionFormcs";
             this.Text = "CustomersSelectionFormcs";
@@ -116,7 +116,7 @@
         private System.Windows.Forms.Button NewCustomer;
         private System.Windows.Forms.Button EditCustomerButton;
         private System.Windows.Forms.ListBox CustomerSelectionListBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox CustomerSearch;
         private System.Windows.Forms.Button SearchButton;
     }
 }

@@ -33,7 +33,7 @@
             this.ListofStylists = new System.Windows.Forms.ListBox();
             this.EditStylistButton = new System.Windows.Forms.Button();
             this.NewStylist = new System.Windows.Forms.Button();
-            this.AddChairButton = new System.Windows.Forms.Button();
+            this.BookChairButton = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
@@ -84,14 +84,15 @@
             this.NewStylist.UseVisualStyleBackColor = true;
             this.NewStylist.Click += new System.EventHandler(this.NewStylist_Click);
             // 
-            // AddChairButton
+            // BookChairButton
             // 
-            this.AddChairButton.Location = new System.Drawing.Point(804, 818);
-            this.AddChairButton.Name = "AddChairButton";
-            this.AddChairButton.Size = new System.Drawing.Size(143, 38);
-            this.AddChairButton.TabIndex = 5;
-            this.AddChairButton.Text = "Add Chair";
-            this.AddChairButton.UseVisualStyleBackColor = true;
+            this.BookChairButton.Location = new System.Drawing.Point(804, 818);
+            this.BookChairButton.Name = "BookChairButton";
+            this.BookChairButton.Size = new System.Drawing.Size(143, 38);
+            this.BookChairButton.TabIndex = 5;
+            this.BookChairButton.Text = "Book Chair";
+            this.BookChairButton.UseVisualStyleBackColor = true;
+            this.BookChairButton.Click += new System.EventHandler(this.BookChairButton_Click);
             // 
             // dateTimePicker1
             // 
@@ -106,7 +107,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1013, 940);
             this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.AddChairButton);
+            this.Controls.Add(this.BookChairButton);
             this.Controls.Add(this.NewStylist);
             this.Controls.Add(this.EditStylistButton);
             this.Controls.Add(this.ListofStylists);
@@ -126,7 +127,7 @@
         private System.Windows.Forms.ListBox ListofStylists;
         private System.Windows.Forms.Button EditStylistButton;
         private System.Windows.Forms.Button NewStylist;
-        private System.Windows.Forms.Button AddChairButton;
+        private System.Windows.Forms.Button BookChairButton;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

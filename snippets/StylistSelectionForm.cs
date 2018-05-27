@@ -95,7 +95,7 @@ namespace snippets
             Stylist.Closed += (s, args) => this.Close();            
             Stylist.Show();            
         }
-        public static string SearchMethod(char[] search, string searchlength)
+        public static List<string> SearchMethod(char[] search, string searchlength, List<string> list)
         {
             int lengthofstring = 0;
             string threecharsofstylist = "";
@@ -111,7 +111,16 @@ namespace snippets
             {
                 threecharsofstylist += search[i];
             }
-            return threecharsofstylist;
+             List<string> addtotextbox = new List<string>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].ToLower().Contains(threecharsofstylist))
+                {
+                    addtotextbox.Add(list[i]);
+                }
+            }
+            return addtotextbox;
+            //add values to another list
         }
         //Make this into a method that can be called from both stylist and customer
         private void SearchButton_Click(object sender, EventArgs e)                                    
@@ -119,13 +128,23 @@ namespace snippets
             ListofStylists.Items.Clear();
             char[] stylistsearchsplit = StylistSearch.Text.ToLower().ToCharArray();
             string stylist = StylistSearch.Text;
-            for (int i = 0; i < ReadingInListOfStylists.Count; i++)
+            //add list to the method
+            List<string> newlist = new List<string>();
+            newlist = SearchMethod(stylistsearchsplit, stylist, ReadingInListOfStylists);
+            for (int i = 0; i < newlist.Count; i++)
             {
-                if (ReadingInListOfStylists[i].ToLower().Contains(SearchMethod(stylistsearchsplit, stylist)))
-                {
-                    ListofStylists.Items.Add(ReadingInListOfStylists[i]);
-                }
+            ListofStylists.Items.Add(newlist[i]);
             }
+            
+        }
+
+        private void BookChairButton_Click(object sender, EventArgs e)
+        {
+            //Get the date
+            //Get the selected stylist
+            //Book a chair
+            //Only 4 chairs allowed to be booked a day
+            //only allowed to book one chair for one stylist per day
         }
     }
 }
