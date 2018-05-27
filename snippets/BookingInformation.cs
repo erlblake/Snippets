@@ -21,11 +21,11 @@ namespace snippets
             StylistDropDownList();
             
     }
-public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
+        public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
         private void Bookingbutton_Click(object sender, EventArgs e)
         {
 
-            if (dateTimePicker1.MinDate < DateTime.Today)
+            if (dateTimePicker1.MinDate > DateTime.Today)
             {
                 MessageBox.Show("Please enter a date on or after today");
             }
@@ -57,7 +57,7 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
             string CustomerName = FirstName + " " + LastName;
 
           //Selected Stylist
-           string[] stylist =  DropDownListofStylists.SelectedIndex.ToString().Split(' ');
+           string[] stylist =  DropDownListofStylists.SelectedItem.ToString().Split(' ');
             string StylistFirstName = "";
             string StylsitLastName = "";
             for (int i = 0; i < stylist.Length; i++)
@@ -74,24 +74,24 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
             }
             int rate = 0;
             //Gets the hourly rate of the stylist
-            if(StylistandRate.ContainsKey(DropDownListofStylists.SelectedIndex.ToString()))
+            if(StylistandRate.ContainsKey(DropDownListofStylists.SelectedItem.ToString()))
             {
-                StylistandRate.TryGetValue(DropDownListofStylists.SelectedIndex.ToString(), out rate);
+                StylistandRate.TryGetValue(DropDownListofStylists.SelectedItem.ToString(), out rate);
             }
             //add information to transaction list
             List<SnippetsBackend.Transaction> ListofTransactions = new List<SnippetsBackend.Transaction>();
             //Adding transaction of customer 
-            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "Appointment with " + DropDownListofStylists.SelectedIndex.ToString(), dateTimePicker1.Text, DurationList.SelectedIndex, rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, " with " + DropDownListofStylists.SelectedItem.ToString(), dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
             //Adding information of stylist
-            ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Booking with " + CustomerName, dateTimePicker1.Text, DurationList.SelectedIndex, rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Appointment with " + CustomerName, dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
             //write the information to a textile
             using (StreamWriter tw = new StreamWriter("Transactions.txt", true))
             {
                 foreach(SnippetsBackend.Transaction t in ListofTransactions)
                 {
-                    tw.WriteLine(t.FirstName, t.LastName, t.ChairOrAppointment, t.DateandTime, t.Duration, t.Rate);
-                    tw.Close();
-                }
+                    tw.WriteLine(t.FirstName + " " + t.LastName + " " + t.ChairOrAppointment + " " + t.DateandTime + " " + t.Duration + " " + t.Rate);
+                   
+                } tw.Close();
             }
         }
 
@@ -118,15 +118,13 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
        
         public void DropDownListInfo()
         {
-            DurationList.Items.Add("15 mins");
             DurationList.Items.Add("30 mins");
-            DurationList.Items.Add("45 mins");
             DurationList.Items.Add("60 mins");
         }
 
         public void StylistDropDownList()
         {
-            string[] line = File.ReadAllLines("Listofinfo.txt");
+            string[] line = File.ReadAllLines("ListofStylists.txt");
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
@@ -150,7 +148,7 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
                             break;
                     }
                 }
-                string name = RFirstName + RLastName;
+                string name = RFirstName + " " + RLastName;
                 DropDownListofStylists.Items.Add(name);
                
                 StylistandRate.Add(name, HourlyRate);
@@ -177,33 +175,8 @@ public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
         {
 
         }
-        public List<string> ReadingInListOfStylists = new List<string>();
-        public void ReadInTextFile()
-        {
-            string[] line = File.ReadAllLines("ListofStylists.txt");
-            string[] oneline;
-            string RFirstName = "";
-            string RLastName = "";
-            int i = 0;
-            for (i = 0; i < line.Length; i++)
-            {
-                oneline = line[i].Split(',');
-                for (int x = 0; x < oneline.Length; x++)
-                {
-                    switch (x)
-                    {
-                        case 0:
-                            RFirstName = oneline[x];
-                            break;
-                        case 1:
-                            RLastName = oneline[x];
-                            break;
-                    }
-                }
-                string StylistsName = RFirstName + " " + RLastName;
-                ReadingInListOfStylists.Add(StylistsName);
-            }
+        
         }
     }
-}
+
 

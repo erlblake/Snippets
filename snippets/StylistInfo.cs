@@ -97,7 +97,7 @@ namespace snippets
             string RLastName = "";
             string RChairorAppointment = "";
             string RDateandTime = "";
-            int RDuration = 0;
+            string RDuration = "";
             int RRate = 0;
 
             for (int i = 0; i < line.Length; i++)
@@ -117,10 +117,10 @@ namespace snippets
                             RChairorAppointment = oneline[x];
                             break;
                         case 3:
-                            RDateandTime = (oneline[x]);
+                            RDateandTime = oneline[x];
                             break;
                         case 4:
-                            RDuration = int.Parse(oneline[x]);
+                            RDuration = oneline[x];
                             break;
                         case 5:
                             RRate = int.Parse(oneline[x]);

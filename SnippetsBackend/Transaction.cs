@@ -12,10 +12,10 @@ namespace SnippetsBackend
         public string LastName;
         public string ChairOrAppointment;
         public string DateandTime;
-        public int Duration;
+        public string Duration;
         public double Rate;
 
-        public Transaction(string FirstName, string LastName, string ChairOrAppointment, string DateandTime, int Duration, double Rate)
+        public Transaction(string FirstName, string LastName, string ChairOrAppointment, string DateandTime, string Duration, double Rate)
         {
             this.FirstName = FirstName;
             this.LastName = LastName;

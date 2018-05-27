@@ -21,9 +21,12 @@ namespace snippets
         public static string CustomerSelected = "";
         private void BookAppointmentButton_Click(object sender, EventArgs e)
         {
-            Application.Run(new BookingInformation());
+            Hide();
+            BookingInformation Booking = new BookingInformation();
+            Booking.Closed += (s, args) => this.Show();
+            Booking.Show();
             //Cusomter Selection on the listbox
-            CustomerSelected = CustomerSelectionListBox.SelectedIndex.ToString();
+            CustomerSelected = CustomerSelectionListBox.SelectedItem.ToString();
 
         }
 

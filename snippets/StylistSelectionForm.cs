@@ -140,9 +140,11 @@ namespace snippets
 
         private void BookChairButton_Click(object sender, EventArgs e)
         {
+            //
             //Get the date
             //Get the selected stylist
             //Book a chair
+            //Add information to transaction class
             //Only 4 chairs allowed to be booked a day
             //only allowed to book one chair for one stylist per day
         }
