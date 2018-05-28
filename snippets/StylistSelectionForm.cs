@@ -58,15 +58,17 @@ namespace snippets
         }
         private void ListofStylists_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+          
         }
         public List<string> ReadingInListOfStylists = new List<string>();
-        public                                                                                                                                                                                                 void ReadInTextFile()
+        public Dictionary<string, double> StylistRate = new Dictionary<string, double>();
+        public void ReadInTextFile()          
         {
             string[] line = File.ReadAllLines("ListofStylists.txt");
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
+            double RHourlyRate = 0;
             int i = 0;
             for (i = 0; i < line.Length; i++)
             {
@@ -81,10 +83,15 @@ namespace snippets
                         case 1:
                             RLastName = oneline[x];
                             break;
+                        case 4:
+                            RHourlyRate = int.Parse(oneline[x]);
+                            break;
                     }
                 }
              string StylistsName = RFirstName +" " + RLastName;
             ReadingInListOfStylists.Add(StylistsName);
+                //Cannot add a stylist twice e.g. Amelia Shep
+            StylistRate.Add(StylistsName, RHourlyRate);
             }  
         }
 
@@ -140,13 +147,111 @@ namespace snippets
 
         private void BookChairButton_Click(object sender, EventArgs e)
         {
-            //
-            //Get the date
-            //Get the selected stylist
-            //Book a chair
-            //Add information to transaction class
-            //Only 4 chairs allowed to be booked a day
-            //only allowed to book one chair for one stylist per day
+            if (ListofStylists.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a stylist who would like to book");
+            }
+            else
+            {
+                ReadInTextFile();
+                ReadInTransaction();
+                
+                string[] selectedstylist = ListofStylists.SelectedItem.ToString().Split(' ');
+                string StylistFirstName = "";
+                string StylistLastName = "";
+                for (int i = 0; i < selectedstylist.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            StylistFirstName = selectedstylist[i];
+                            break;
+                        case 1:
+                            StylistLastName = selectedstylist[i];
+                            break;
+
+                    }
+                }
+                double rate = 0;
+                //Gets the hourly rate of the stylist
+                if (StylistRate.ContainsKey(ListofStylists.SelectedItem.ToString()))
+                {
+                    StylistRate.TryGetValue(ListofStylists.SelectedItem.ToString(), out rate);
+                }
+                ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylistLastName, "Chair Booking", dateTimePicker1.Value.ToString(), "NA", rate));
+
+                //Add to textfile
+                using (StreamWriter tw = new StreamWriter("Transaction.txt", true))
+                {
+
+                    foreach (SnippetsBackend.Transaction s in ReadingInListOfTransactions)
+                    {
+                        tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.ChairOrAppointment + "," + s.DateandTime + "," + s.Duration + "," + s.Duration);
+
+                    }
+                    tw.Close();
+                }
+            }
         }
+        List<SnippetsBackend.Transaction> ReadingInListOfTransactions = new List<SnippetsBackend.Transaction>();
+        public void ReadInTransaction()
+        {
+            string[] line = File.ReadAllLines("Transactions.txt");        
+            string[] oneline;
+            string RFirstName = "";
+            string RLastName = "";
+            string RChairorAppointment = "";
+            string RDateandTime = "";
+            string RDuration = "";
+            int RRate = 0;
+            int count = 0;
+            for (int i = 0; i < line.Length; i++)
+            {
+                oneline = line[i].Split(',');
+                for (int x = 0; x < oneline.Length; x++)
+                {
+                    switch (x)
+                    {
+                        case 0:
+                            RFirstName = oneline[x];
+                            break;
+                        case 1:
+                            RLastName = oneline[x];
+                            break;
+                        case 2:
+                            RChairorAppointment = oneline[x];
+                            break;
+                        case 3:
+                            RDateandTime = oneline[x];
+                            break;
+                        case 4:
+                            RDuration = oneline[x];
+                            break;
+                        case 5:
+                            RRate = int.Parse(oneline[x]);
+                            break;
+                    }
+                }
+                string stylistname = RFirstName + " "+ RLastName;
+
+                if(ListofStylists.SelectedItem.ToString() == stylistname)
+                {
+                    if(RDateandTime.ToString() == dateTimePicker1.ToString())
+                    {
+                        MessageBox.Show("Stylist has already booked a chair on this day, you can only book one chair per stylist per day");
+                    }
+                }
+                if(RDateandTime.ToString() == dateTimePicker1.ToString())
+                {
+                    count++;
+                    if(count == 4)
+                    {
+                        MessageBox.Show("There are already four chairs booked on this day");
+                    }
+                }
+                    ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
+            }
+        }
+            
     }
 }
