@@ -144,7 +144,7 @@ namespace snippets
             }
             
         }
-
+        bool date = false;
         private void BookChairButton_Click(object sender, EventArgs e)
         {
             if (ListofStylists.SelectedIndex == -1)
@@ -153,43 +153,46 @@ namespace snippets
             }
             else
             {
-                ReadInTextFile();
                 ReadInTransaction();
-                
-                string[] selectedstylist = ListofStylists.SelectedItem.ToString().Split(' ');
-                string StylistFirstName = "";
-                string StylistLastName = "";
-                for (int i = 0; i < selectedstylist.Length; i++)
+                if (date == false)
                 {
-                    switch (i)
+                    string[] selectedstylist = ListofStylists.SelectedItem.ToString().Split(' ');
+                    string StylistFirstName = "";
+                    string StylistLastName = "";
+                    for (int i = 0; i < selectedstylist.Length; i++)
                     {
-                        case 0:
-                            StylistFirstName = selectedstylist[i];
-                            break;
-                        case 1:
-                            StylistLastName = selectedstylist[i];
-                            break;
+                        switch (i)
+                        {
+                            case 0:
+                                StylistFirstName = selectedstylist[i];
+                                break;
+                            case 1:
+                                StylistLastName = selectedstylist[i];
+                                break;
+
+                        }
+                    }
+                    double rate = 0;
+                    //Gets the hourly rate of the stylist
+                    if (StylistRate.ContainsKey(ListofStylists.SelectedItem.ToString()))
+                    {
+                        StylistRate.TryGetValue(ListofStylists.SelectedItem.ToString(), out rate);
+                    }
+                    ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylistLastName, "Chair Booking", dateTimePicker1.Value.ToShortDateString(), "NA", rate));
+
+                    //Add to textfile
+                    using (StreamWriter tw = new StreamWriter("Transactions.txt", false))
+                    {
+
+                        foreach (SnippetsBackend.Transaction s in ReadingInListOfTransactions)
+                        {
+                            tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.ChairOrAppointment + "," + s.DateandTime + "," + s.Duration + "," + s.Rate);
+
+                        }
+                        tw.Close();
 
                     }
-                }
-                double rate = 0;
-                //Gets the hourly rate of the stylist
-                if (StylistRate.ContainsKey(ListofStylists.SelectedItem.ToString()))
-                {
-                    StylistRate.TryGetValue(ListofStylists.SelectedItem.ToString(), out rate);
-                }
-                ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylistLastName, "Chair Booking", dateTimePicker1.Value.ToString(), "NA", rate));
-
-                //Add to textfile
-                using (StreamWriter tw = new StreamWriter("Transaction.txt", true))
-                {
-
-                    foreach (SnippetsBackend.Transaction s in ReadingInListOfTransactions)
-                    {
-                        tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.ChairOrAppointment + "," + s.DateandTime + "," + s.Duration + "," + s.Duration);
-
-                    }
-                    tw.Close();
+                    MessageBox.Show("Stylist has booked a chair");
                 }
             }
         }
@@ -236,20 +239,21 @@ namespace snippets
 
                 if(ListofStylists.SelectedItem.ToString() == stylistname)
                 {
-                    if(RDateandTime.ToString() == dateTimePicker1.ToString())
+                    if(RDateandTime.ToString() == dateTimePicker1.Value.ToShortDateString())
                     {
                         MessageBox.Show("Stylist has already booked a chair on this day, you can only book one chair per stylist per day");
+                        date = true;
                     }
                 }
-                if(RDateandTime.ToString() == dateTimePicker1.ToString())
+                if(RDateandTime.ToString() == dateTimePicker1.Value.ToShortDateString())
                 {
                     count++;
                     if(count == 4)
                     {
                         MessageBox.Show("There are already four chairs booked on this day");
+                        date = true;
                     }
                 }
-                    ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
             }
         }
             

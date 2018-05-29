@@ -49,9 +49,9 @@
             // 
             // StylistSearch
             // 
-            this.StylistSearch.Location = new System.Drawing.Point(179, 90);
+            this.StylistSearch.Location = new System.Drawing.Point(164, 90);
             this.StylistSearch.Name = "StylistSearch";
-            this.StylistSearch.Size = new System.Drawing.Size(768, 31);
+            this.StylistSearch.Size = new System.Drawing.Size(758, 31);
             this.StylistSearch.TabIndex = 1;
             // 
             // ListofStylists
@@ -60,13 +60,13 @@
             this.ListofStylists.ItemHeight = 25;
             this.ListofStylists.Location = new System.Drawing.Point(50, 174);
             this.ListofStylists.Name = "ListofStylists";
-            this.ListofStylists.Size = new System.Drawing.Size(897, 604);
+            this.ListofStylists.Size = new System.Drawing.Size(872, 279);
             this.ListofStylists.TabIndex = 2;
             this.ListofStylists.SelectedIndexChanged += new System.EventHandler(this.ListofStylists_SelectedIndexChanged);
             // 
             // EditStylistButton
             // 
-            this.EditStylistButton.Location = new System.Drawing.Point(50, 818);
+            this.EditStylistButton.Location = new System.Drawing.Point(50, 469);
             this.EditStylistButton.Name = "EditStylistButton";
             this.EditStylistButton.Size = new System.Drawing.Size(248, 38);
             this.EditStylistButton.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             // NewStylist
             // 
-            this.NewStylist.Location = new System.Drawing.Point(317, 818);
+            this.NewStylist.Location = new System.Drawing.Point(304, 469);
             this.NewStylist.Name = "NewStylist";
             this.NewStylist.Size = new System.Drawing.Size(202, 38);
             this.NewStylist.TabIndex = 4;
@@ -86,7 +86,7 @@
             // 
             // BookChairButton
             // 
-            this.BookChairButton.Location = new System.Drawing.Point(804, 818);
+            this.BookChairButton.Location = new System.Drawing.Point(779, 474);
             this.BookChairButton.Name = "BookChairButton";
             this.BookChairButton.Size = new System.Drawing.Size(143, 38);
             this.BookChairButton.TabIndex = 5;
@@ -96,16 +96,19 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(525, 820);
+            this.dateTimePicker1.CustomFormat = "";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.dateTimePicker1.Location = new System.Drawing.Point(512, 476);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(261, 31);
-            this.dateTimePicker1.TabIndex = 6;
+            this.dateTimePicker1.TabIndex = 4;
             // 
             // StylistSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1013, 940);
+            this.ClientSize = new System.Drawing.Size(1013, 563);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.BookChairButton);
             this.Controls.Add(this.NewStylist);
