@@ -88,57 +88,23 @@ namespace snippets
             }
         }
 
-        public void ReadInTransactionsTextFile()
+        public void ReadTransaction()
         {
-            string[] line = File.ReadAllLines("Transactions.txt");
-            List<SnippetsBackend.Transaction> ReadingInListOfTransactions = new List<SnippetsBackend.Transaction>();
-            string[] oneline;
-            string RFirstName = "";
-            string RLastName = "";
-            string RChairorAppointment = "";
-            string RDateandTime = "";
-            string RDuration = "";
-            int RRate = 0;
-
-            for (int i = 0; i < line.Length; i++)
-            {
-                oneline = line[i].Split(',');
-                for (int x = 0; x < oneline.Length; x++)
-                {
-                    switch (x)
-                    {
-                        case 0:
-                            RFirstName = oneline[x];
-                            break;
-                        case 1:
-                            RLastName = oneline[x];
-                            break;
-                        case 2:
-                            RChairorAppointment = oneline[x];
-                            break;
-                        case 3:
-                            RDateandTime = oneline[x];
-                            break;
-                        case 4:
-                            RDuration = oneline[x];
-                            break;
-                        case 5:
-                            RRate = int.Parse(oneline[x]);
-                            break;
-                    }
-                }
-                ReadingInListOfTransactions.Add(new SnippetsBackend.Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
+           //NOT WORKING
                 try
                 {
                     //Finds the stylist and adds transactions 
-                    StylistTransactions.Items.Add(ReadingInListOfTransactions.Find(x => x.FirstName.Contains(RFirstName) && x.LastName.Contains(RLastName)));
+                    StylistTransactions.Items.Add(SnippetsBackend.Reading.ReadTransaction().Find(x => x.FirstName.Contains(FirstNameTextBox.Text) && x.LastName.Contains(SurnameText.Text)));
+                
                 }
                 catch
                 {
                     MessageBox.Show("This stylist has no transactions");
                 }
             }
-        }
+        
+
+
         //Need to delete them from the list?
         public void EditStylistClicked()
         {
@@ -146,7 +112,7 @@ namespace snippets
             {
                 ReadInTextFile();
                 //Call the transactions for that stylist
-                ReadInTransactionsTextFile();
+                ReadTransaction();
                 string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " "+ EmailText.Text + " "+ PhoneNumberText.Text + " " + HourlyRateText.Text;
                 for (int i = 0; i < ListofStylists.Count; i++)
                 {

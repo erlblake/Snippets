@@ -97,23 +97,26 @@ namespace snippets
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            int number_of_slots = 15;
+            int interval = 30; // in minuites
+
             //Clears the previous selection
             listBox1.Items.Clear();
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 9:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 9:30");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 10:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 10:30");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 11:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 11:30");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 12:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 12:30");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 13:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 13:30");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 14:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 15:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 15:30");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 16:00");
-            listBox1.Items.Add(dateTimePicker1.Value.ToShortDateString() + " 16:30");
+
+            int year = dateTimePicker1.Value.Year;
+            int month = dateTimePicker1.Value.Month;
+            int day = dateTimePicker1.Value.Day;
+            DateTime time = new DateTime(year, month, day, 9, 0, 0);
+
+            for (int i = 0; i < number_of_slots; i++)
+            {
+                //check time here if stylist is taken
+
+                listBox1.Items.Add(time.ToLocalTime().ToString());
+                time = time.AddMinutes(interval);
+            }
+
+            StylistDropDownList();
         }
        
         public void DropDownListInfo()
@@ -124,11 +127,13 @@ namespace snippets
 
         public void StylistDropDownList()
         {
-            string[] line = File.ReadAllLines("ListofStylists.txt");
+            string[] line = File.ReadAllLines("Transactions.txt");
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
+            string RDate = "";
             int HourlyRate = 0;
+            string NA = "";
 
             for (int i = 0; i < line.Length; i++)
             {
@@ -143,18 +148,33 @@ namespace snippets
                         case 1:
                             RLastName = oneline[x];
                             break;
+                        case 3:
+                            RDate = oneline[x];
+                            break;
                         case 4:
+                            NA = oneline[x];
+                            break;
+                        case 5:
                             HourlyRate = int.Parse(oneline[x]);
                             break;
                     }
                 }
-                string name = RFirstName + " " + RLastName;
-                DropDownListofStylists.Items.Add(name);
-               
-                StylistandRate.Add(name, HourlyRate);
+                if (NA == "NA")
+                {
+                    if (RDate == dateTimePicker1.Value.ToShortDateString())
+                    {
+                        string name = RFirstName + " " + RLastName;
+                        DropDownListofStylists.Items.Add(name);
+
+                        StylistandRate.Add(name, HourlyRate);
+                    }
+                }
+
             }
 
         }
+        //Check if stylist by checking there is appointment
+
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
