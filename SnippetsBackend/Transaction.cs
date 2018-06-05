@@ -24,5 +24,10 @@ namespace SnippetsBackend
             this.Duration = Duration;
             this.Rate = Rate;
         }
+        public override string ToString()
+        {
+            string Transactioninformation = FirstName + " " + LastName + " " + ChairOrAppointment + " " + DateandTime + " " + Duration + " " + Rate;
+            return Transactioninformation;
+        }
     }
 }

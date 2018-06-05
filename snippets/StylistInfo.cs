@@ -93,9 +93,23 @@ namespace snippets
            //NOT WORKING
                 try
                 {
-                    //Finds the stylist and adds transactions 
-                    StylistTransactions.Items.Add(SnippetsBackend.Reading.ReadTransaction().Find(x => x.FirstName.Contains(FirstNameTextBox.Text) && x.LastName.Contains(SurnameText.Text)));
-                
+                //Finds the stylist and adds transactions 
+                List<SnippetsBackend.Transaction> ReadingList = new List<SnippetsBackend.Transaction>();
+                ReadingList = SnippetsBackend.Reading.ReadTransaction();
+
+                for (int i = 0; i < ReadingList.Count; i++)
+                {
+                    string newstring = ReadingList[i].ToString();
+                    string[] line = newstring.Split(' ');
+                    for (int y = 0; y < line.Length; y++)
+                    {
+
+                    }
+                }
+                   // split = SnippetsBackend.Reading.ReadTransaction().;              
+                //Take each line out of the list 
+                //Split it up
+                //See if first name and last name matches the stylist if it does add to transactions
                 }
                 catch
                 {
@@ -103,8 +117,6 @@ namespace snippets
                 }
             }
         
-
-
         //Need to delete them from the list?
         public void EditStylistClicked()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SnippetsBackend
 {
-   public static class Reading
+    public class Reading
     {
         public static List<Transaction> ReadTransaction()
         {
@@ -51,6 +51,47 @@ namespace SnippetsBackend
                 ReadingInListOfTransactions.Add(new Transaction(RFirstName, RLastName, RChairorAppointment, RDateandTime, RDuration, RRate));
             }
             return ReadingInListOfTransactions;
+        }
+
+        public static List<Stylist> ReadStylist()
+        {
+            List<Stylist> ListofStylists = new List<Stylist>();
+            string[] line = File.ReadAllLines("ListofStylists.txt");
+            string[] oneline;
+            string RFirstName = "";
+            string RLastName = "";
+            string REmail = "";
+            string RPhoneNumber = "";
+            double RHourlyRate = 0;
+            int i = 0;
+            for (i = 0; i < line.Length; i++)
+            {
+                oneline = line[i].Split(',');
+
+                for (int x = 0; x < oneline.Length; x++)
+                {
+                    switch (x)
+                    {
+                        case 0:
+                            RFirstName = oneline[x];
+                            break;
+                        case 1:
+                            RLastName = oneline[x];
+                            break;
+                        case 2:
+                            REmail = oneline[x];
+                            break;
+                        case 3:
+                            RPhoneNumber = oneline[x];
+                            break;
+                        case 4:
+                            RHourlyRate = double.Parse(oneline[x]);
+                            break;
+                    }
+                }
+                ListofStylists.Add(new SnippetsBackend.Stylist(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
+            }
+            return ListofStylists;
         }
     }
 }
