@@ -90,30 +90,51 @@ namespace snippets
 
         public void ReadTransaction()
         {
-           //NOT WORKING
                 try
                 {
                 //Finds the stylist and adds transactions 
                 List<SnippetsBackend.Transaction> ReadingList = new List<SnippetsBackend.Transaction>();
                 ReadingList = SnippetsBackend.Reading.ReadTransaction();
-
+                string RFirstName = "";
+                string RLastname = "";
+                string RChairorAppointment = "";
+                string RDate = "";
+                string Rate = "";
                 for (int i = 0; i < ReadingList.Count; i++)
                 {
                     string newstring = ReadingList[i].ToString();
-                    string[] line = newstring.Split(' ');
+                    string[] line = newstring.Split(',');                 
                     for (int y = 0; y < line.Length; y++)
                     {
-
+                        switch(y)
+                        {
+                            case 0:
+                                RFirstName = line[y];
+                                break;
+                            case 1:
+                                RLastname = line[y];
+                                break;
+                            case 2:
+                                RChairorAppointment = line[y];
+                                break;
+                            case 3:
+                                RDate = line[y];
+                                break;
+                            case 5:
+                                Rate = line[y];
+                                break;
+                        }
+                   
                     }
+                    if (RFirstName == FirstNameTextBox.Text && RLastname == SurnameText.Text)
+                    {
+                            StylistTransactions.Items.Add(RChairorAppointment + " " + RDate + "£" + Rate);
+                    }             
                 }
-                   // split = SnippetsBackend.Reading.ReadTransaction().;              
-                //Take each line out of the list 
-                //Split it up
-                //See if first name and last name matches the stylist if it does add to transactions
                 }
                 catch
                 {
-                    MessageBox.Show("This stylist has no transactions");
+                    StylistTransactions.Items.Add("This stylist has no transactions");
                 }
             }
         

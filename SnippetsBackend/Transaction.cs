@@ -26,7 +26,7 @@ namespace SnippetsBackend
         }
         public override string ToString()
         {
-            string Transactioninformation = FirstName + " " + LastName + " " + ChairOrAppointment + " " + DateandTime + " " + Duration + " " + Rate;
+            string Transactioninformation = FirstName + "," + LastName + "," + ChairOrAppointment + "," + DateandTime + "," + Duration + "," + Rate;
             return Transactioninformation;
         }
     }
