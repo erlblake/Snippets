@@ -64,15 +64,16 @@ namespace snippets
         public Dictionary<string, double> StylistRate = new Dictionary<string, double>();
         public void ReadInTextFile()          
         {
-            string[] line = File.ReadAllLines("ListofStylists.txt");
+            List<SnippetsBackend.Stylist> Stylistslist = SnippetsBackend.Reading.ReadStylist(); 
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
             double RHourlyRate = 0;
             int i = 0;
-            for (i = 0; i < line.Length; i++)
+            for (i = 0; i < Stylistslist.Count; i++)
             {
-                oneline = line[i].Split(',');
+                string stylistline = Stylistslist[i].ToString();
+                oneline = stylistline.Split(',');
                 for (int x = 0; x < oneline.Length; x++)
                 {
                     switch (x)

@@ -19,10 +19,9 @@ namespace snippets
             InitializeComponent();
 
         }
-        public List<SnippetsBackend.Stylist> ListofStylists = new List<SnippetsBackend.Stylist>();
+        public List<SnippetsBackend.Stylist> ListofStylists = SnippetsBackend.Reading.ReadStylist();
         public void ReadInTextFile()
         {
-            string[] line = File.ReadAllLines("ListofStylists.txt");
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
@@ -30,10 +29,10 @@ namespace snippets
             string RPhoneNumber = "";
             double RHourlyRate = 0;
             int i = 0;
-            for (i = 0; i < line.Length; i++)
+            for (i = 0; i < ListofStylists.Count; i++)
             {
-                oneline = line[i].Split(',');
-
+                string splitstylist = ListofStylists[i].ToString();
+                oneline = splitstylist.Split(',');
                 for (int x = 0; x < oneline.Length; x++)
                 {
                     switch (x)
@@ -55,9 +54,6 @@ namespace snippets
                             break;
                     }
                 }
-                ListofStylists.Add(new SnippetsBackend.Stylist(RFirstName, RLastName, REmail, RPhoneNumber, RHourlyRate));
-                bool textboxesfilled = false;
-
                 //If edit selected stylist has been selected, check they do not have the same first name and last name
                 if (RFirstName == FirstNameTextBox.Text && RLastName == SurnameText.Text)
                 {
@@ -65,36 +61,28 @@ namespace snippets
                     FirstNameTextBox.Clear();
                     SurnameText.Clear();
                 }
-
-                if (textboxesfilled == false)
+                if (StylistSelectionForm.edit == true)
                 {
-                    if (StylistSelectionForm.edit == true)
+                    string SelectedStylistFirstName = StylistSelectionForm.StylistFirstName;
+                    string SelectedStylistLastName = StylistSelectionForm.StylistLastName;
+                    if (RFirstName == SelectedStylistFirstName && RLastName == SelectedStylistLastName)
                     {
-                        string SelectedStylistFirstName = StylistSelectionForm.StylistFirstName;
-                        string SelectedStylistLastName = StylistSelectionForm.StylistLastName;
-                        if (RFirstName == SelectedStylistFirstName && RLastName == SelectedStylistLastName)
-                        {
-                            FirstNameTextBox.Text = SelectedStylistFirstName;
-                            SurnameText.Text = SelectedStylistLastName;
-                            EmailText.Text = REmail;
-                            PhoneNumberText.Text = RPhoneNumber.ToString();
-                            HourlyRateText.Text = RHourlyRate.ToString();
-                            textboxesfilled = true;
-                        }
+                        FirstNameTextBox.Text = SelectedStylistFirstName;
+                        SurnameText.Text = SelectedStylistLastName;
+                        EmailText.Text = REmail;
+                        PhoneNumberText.Text = RPhoneNumber.ToString();
+                        HourlyRateText.Text = RHourlyRate.ToString();
                     }
-
                 }
-
             }
         }
 
         public void ReadTransaction()
         {
-                try
-                {
+            try
+            {
                 //Finds the stylist and adds transactions 
-                List<SnippetsBackend.Transaction> ReadingList = new List<SnippetsBackend.Transaction>();
-                ReadingList = SnippetsBackend.Reading.ReadTransaction();
+                List<SnippetsBackend.Transaction> ReadingList = SnippetsBackend.Reading.ReadTransaction();
                 string RFirstName = "";
                 string RLastname = "";
                 string RChairorAppointment = "";
@@ -103,10 +91,10 @@ namespace snippets
                 for (int i = 0; i < ReadingList.Count; i++)
                 {
                     string newstring = ReadingList[i].ToString();
-                    string[] line = newstring.Split(',');                 
+                    string[] line = newstring.Split(',');
                     for (int y = 0; y < line.Length; y++)
                     {
-                        switch(y)
+                        switch (y)
                         {
                             case 0:
                                 RFirstName = line[y];
@@ -124,20 +112,20 @@ namespace snippets
                                 Rate = line[y];
                                 break;
                         }
-                   
+
                     }
                     if (RFirstName == FirstNameTextBox.Text && RLastname == SurnameText.Text)
                     {
-                            StylistTransactions.Items.Add(RChairorAppointment + " " + RDate + "£" + Rate);
-                    }             
-                }
-                }
-                catch
-                {
-                    StylistTransactions.Items.Add("This stylist has no transactions");
+                        StylistTransactions.Items.Add(RChairorAppointment + " " + RDate + "£" + Rate);
+                    }
                 }
             }
-        
+            catch
+            {
+                StylistTransactions.Items.Add("This stylist has no transactions");
+            }
+        }
+
         //Need to delete them from the list?
         public void EditStylistClicked()
         {
@@ -146,7 +134,7 @@ namespace snippets
                 ReadInTextFile();
                 //Call the transactions for that stylist
                 ReadTransaction();
-                string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " "+ EmailText.Text + " "+ PhoneNumberText.Text + " " + HourlyRateText.Text;
+                string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " " + EmailText.Text + " " + PhoneNumberText.Text + " " + HourlyRateText.Text;
                 for (int i = 0; i < ListofStylists.Count; i++)
                 {
                     if (ListofStylists[i].ToString() == stylistinfo)
@@ -179,8 +167,9 @@ namespace snippets
                     foreach (SnippetsBackend.Stylist s in ListofStylists)
                     {
                         tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.Email + "," + s.PhoneNumber + "," + s.HourlyRate);
-                        
-                    }tw.Close();
+
+                    }
+                    tw.Close();
                 }
                 MessageBox.Show("Stylist has been added/edited");
                 FirstNameTextBox.Clear();
@@ -194,7 +183,7 @@ namespace snippets
                 MessageBox.Show("Please fill in all the textboxes");
             }
         }
-       public bool IsValidEmail(string email)
+        public bool IsValidEmail(string email)
         {
             try
             {
