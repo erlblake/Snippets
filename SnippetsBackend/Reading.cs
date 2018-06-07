@@ -93,5 +93,41 @@ namespace SnippetsBackend
             }
             return ListofStylists;
         }
+        public static List<Customers> ReadCustomers()
+        {
+            List<Customers> ListofCustomers = new List<Customers>();
+            string[] line = File.ReadAllLines("ListofCustomers.txt");
+            string[] oneline;
+            string RFirstName = "";
+            string RLastName = "";
+            string REmail = "";
+            string RPhoneNumber = "";
+            int i = 0;
+            for (i = 0; i < line.Length; i++)
+            {
+                oneline = line[i].Split(',');
+
+                for (int x = 0; x < oneline.Length; x++)
+                {
+                    switch (x)
+                    {
+                        case 0:
+                            RFirstName = oneline[x];
+                            break;
+                        case 1:
+                            RLastName = oneline[x];
+                            break;
+                        case 2:
+                            REmail = oneline[x];
+                            break;
+                        case 3:
+                            RPhoneNumber = oneline[x];
+                            break;
+                    }
+                }
+                ListofCustomers.Add(new SnippetsBackend.Customers(RFirstName, RLastName, REmail, RPhoneNumber));
+            }
+            return ListofCustomers;
+        }
     }
 }

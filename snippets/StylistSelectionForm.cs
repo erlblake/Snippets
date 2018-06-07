@@ -184,34 +184,29 @@ namespace snippets
                     //Add to textfile
                     using (StreamWriter tw = new StreamWriter("Transactions.txt", false))
                     {
-
                         foreach (SnippetsBackend.Transaction s in ReadingInListOfTransactions)
                         {
                             tw.WriteLine(s.FirstName + "," + s.LastName + "," + s.ChairOrAppointment + "," + s.DateandTime + "," + s.Duration + "," + s.Rate);
 
                         }
                         tw.Close();
-
                     }
                     MessageBox.Show("Stylist has booked a chair");
                 }
             }
         }
-        List<SnippetsBackend.Transaction> ReadingInListOfTransactions = new List<SnippetsBackend.Transaction>();
+        List<SnippetsBackend.Transaction> ReadingInListOfTransactions = SnippetsBackend.Reading.ReadTransaction();
         public void ReadInTransaction()
-        {
-            string[] line = File.ReadAllLines("Transactions.txt");        
+        {      
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
-            string RChairorAppointment = "";
             string RDateandTime = "";
-            string RDuration = "";
-            int RRate = 0;
             int count = 0;
-            for (int i = 0; i < line.Length; i++)
+            for (int i = 0; i < ReadingInListOfTransactions.Count; i++)
             {
-                oneline = line[i].Split(',');
+                string Transactionline = ReadingInListOfTransactions[i].ToString();
+                oneline = Transactionline.Split(',');
                 for (int x = 0; x < oneline.Length; x++)
                 {
                     switch (x)
@@ -222,17 +217,8 @@ namespace snippets
                         case 1:
                             RLastName = oneline[x];
                             break;
-                        case 2:
-                            RChairorAppointment = oneline[x];
-                            break;
                         case 3:
                             RDateandTime = oneline[x];
-                            break;
-                        case 4:
-                            RDuration = oneline[x];
-                            break;
-                        case 5:
-                            RRate = int.Parse(oneline[x]);
                             break;
                     }
                 }

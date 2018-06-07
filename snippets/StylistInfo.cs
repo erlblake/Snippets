@@ -116,7 +116,7 @@ namespace snippets
                     }
                     if (RFirstName == FirstNameTextBox.Text && RLastname == SurnameText.Text)
                     {
-                        StylistTransactions.Items.Add(RChairorAppointment + " " + RDate + "£" + Rate);
+                        StylistTransactions.Items.Add(RChairorAppointment + " " + RDate + " £" + Rate);
                     }
                 }
             }

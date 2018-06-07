@@ -81,16 +81,18 @@ namespace snippets
         }
 
         public List<string> ReadinginListofCustomers = new List<string>();
+        
         public void ReadInTextFile()
         {
-            string[] line = File.ReadAllLines("ListofCustomers.txt");
+            List<SnippetsBackend.Customers> ListofCustomers = SnippetsBackend.Reading.ReadCustomers();
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
             int i = 0;
-            for (i = 0; i < line.Length; i++)
+            for (i = 0; i < ListofCustomers.Count; i++)
             {
-                oneline = line[i].Split(',');
+                string customerline = ListofCustomers[i].ToString();
+                oneline = customerline.Split(',');
                 for (int x = 0; x < oneline.Length; x++)
                 {
                     switch (x)

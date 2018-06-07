@@ -81,7 +81,7 @@ namespace snippets
             //add information to transaction list
             List<SnippetsBackend.Transaction> ListofTransactions = new List<SnippetsBackend.Transaction>();
             //Adding transaction of customer 
-            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, " with " + DropDownListofStylists.SelectedItem.ToString(), dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "with " + DropDownListofStylists.SelectedItem.ToString(), dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
             //Adding information of stylist
             ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Appointment with " + CustomerName, dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
             //write the information to a textile
@@ -89,7 +89,7 @@ namespace snippets
             {
                 foreach (SnippetsBackend.Transaction t in ListofTransactions)
                 {
-                    tw.WriteLine(t.FirstName + "," + t.LastName + ", " + t.ChairOrAppointment + "," + t.DateandTime + "," + t.Duration + "," + t.Rate);
+                    tw.WriteLine(t.FirstName + "," + t.LastName + "," + t.ChairOrAppointment + "," + t.DateandTime + "," + t.Duration + "," + t.Rate);
 
                 }
                 tw.Close();
@@ -112,7 +112,6 @@ namespace snippets
             for (int i = 0; i < number_of_slots; i++)
             {
                 //check time here if stylist is taken
-
                 listBox1.Items.Add(time.ToLocalTime().ToString());
                 time = time.AddMinutes(interval);
             }
@@ -161,6 +160,7 @@ namespace snippets
                             break;
                     }
                 }
+                //Need to check if the time has already been slected if so, needs to be removed
                 if (NA == "NA")
                 {
                     if (RDate == dateTimePicker1.Value.ToShortDateString())

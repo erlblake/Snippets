@@ -52,20 +52,19 @@ namespace snippets
             }
         }
 
-        public List<SnippetsBackend.Customers> ListofCustomers = new List<SnippetsBackend.Customers>();
+        public List<SnippetsBackend.Customers> ListofCustomers = SnippetsBackend.Reading.ReadCustomers();
         public void ReadInTextFile()
         {
-            string[] line = File.ReadAllLines("ListofCustomers.txt");
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
             string REmail = "";
-           string RPhoneNumber = "";
+            string RPhoneNumber = "";
             int i = 0;
-            for (i = 0; i < line.Length; i++)
+            for (i = 0; i < ListofCustomers.Count; i++)
             {
-                oneline = line[i].Split(',');
-
+                string customerstring = ListofCustomers[i].ToString();
+                oneline = customerstring.Split(',');
                 for (int x = 0; x < oneline.Length; x++)
                 {
                     switch (x)
@@ -84,9 +83,6 @@ namespace snippets
                             break;
                     }
                 }
-                ListofCustomers.Add(new SnippetsBackend.Customers(RFirstName, RLastName, REmail, RPhoneNumber));
-                bool textboxesfilled = false;
-
                 //If edit selected customer has been selected, check they do not have the same first name and last name
                 if (RFirstName == FirstNameTextBox.Text && RLastName == SurnameText.Text)
                 {
@@ -94,27 +90,22 @@ namespace snippets
                     FirstNameTextBox.Clear();
                     SurnameText.Clear();
                 }
-
                 //If the edit customer button has been clicked
-                if (textboxesfilled == false)
+                if (CustomersSelectionFormcs.edit == true)
                 {
-                    if (CustomersSelectionFormcs.edit == true)
+                    string SelectedCustomerFirstName = CustomersSelectionFormcs.CustomerFirstName;
+                    string SelectedCustomerLastName = CustomersSelectionFormcs.CustomerLastName;
+                    if (RFirstName == SelectedCustomerFirstName && RLastName == SelectedCustomerLastName)
                     {
-                        string SelectedCustomerFirstName = CustomersSelectionFormcs.CustomerFirstName;
-                        string SelectedCustomerLastName = CustomersSelectionFormcs.CustomerLastName;
-                        if (RFirstName == SelectedCustomerFirstName && RLastName == SelectedCustomerLastName)
-                        {
-                            FirstNameTextBox.Text = SelectedCustomerFirstName;
-                            SurnameText.Text = SelectedCustomerLastName;
-                            EmailText.Text = REmail;
-                            PhoneNumberText.Text = RPhoneNumber.ToString();
-                            textboxesfilled = true;
-                        }
+                        FirstNameTextBox.Text = SelectedCustomerFirstName;
+                        SurnameText.Text = SelectedCustomerLastName;
+                        EmailText.Text = REmail;
+                        PhoneNumberText.Text = RPhoneNumber.ToString();
                     }
-
                 }
 
             }
+
         }
 
         public void EditCustomerClicked()
@@ -123,7 +114,7 @@ namespace snippets
             {
                 ReadInTextFile();
                 //Call the transactions for that stylist
-                //ReadInTransactionsTextFile();
+                ReadTransaction();
                 string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " " + EmailText.Text + " " + PhoneNumberText.Text + " ";
                 for (int i = 0; i < ListofCustomers.Count; i++)
                 {
@@ -160,6 +151,55 @@ namespace snippets
             catch
             {
                 return false;
+            }
+        }
+
+        public void ReadTransaction()
+        {
+            try
+            {
+                //Finds the stylist and adds transactions 
+                List<SnippetsBackend.Transaction> ReadingList = SnippetsBackend.Reading.ReadTransaction();
+                string RFirstName = "";
+                string RLastname = "";
+                string RChairorAppointment = "";
+                string RDate = "";
+                string Rate = "";
+                for (int i = 0; i < ReadingList.Count; i++)
+                {
+                    string newstring = ReadingList[i].ToString();
+                    string[] line = newstring.Split(',');
+                    for (int y = 0; y < line.Length; y++)
+                    {
+                        switch (y)
+                        {
+                            case 0:
+                                RFirstName = line[y];
+                                break;
+                            case 1:
+                                RLastname = line[y];
+                                break;
+                            case 2:
+                                RChairorAppointment = line[y];
+                                break;
+                            case 3:
+                                RDate = line[y];
+                                break;
+                            case 5:
+                                Rate = line[y];
+                                break;
+                        }
+
+                    }
+                    if (RFirstName == FirstNameTextBox.Text && RLastname == SurnameText.Text)
+                    {
+                        CustomerAppointments.Items.Add(RDate + " " + RChairorAppointment);
+                    }
+                }
+            }
+            catch
+            {
+                CustomerAppointments.Items.Add("Customer has no appointments");
             }
         }
     }

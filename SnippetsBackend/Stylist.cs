@@ -16,7 +16,7 @@ namespace SnippetsBackend
 
         public override string ToString()
         {
-            string stylistinformation = FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " " + HourlyRate;
+            string stylistinformation = FirstName + "," + LastName + "," + Email + "," + PhoneNumber + "," + HourlyRate;
             return stylistinformation;
         }
     }

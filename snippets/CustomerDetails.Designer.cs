@@ -40,7 +40,7 @@
             this.SurnameLabel = new System.Windows.Forms.Label();
             this.FirstNameTextBox = new System.Windows.Forms.TextBox();
             this.FirstNameLabel = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.CustomerAppointments = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -144,21 +144,21 @@
             this.FirstNameLabel.TabIndex = 15;
             this.FirstNameLabel.Text = "First Name";
             // 
-            // listBox1
+            // CustomerAppointments
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 25;
-            this.listBox1.Location = new System.Drawing.Point(44, 381);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(906, 329);
-            this.listBox1.TabIndex = 30;
+            this.CustomerAppointments.FormattingEnabled = true;
+            this.CustomerAppointments.ItemHeight = 25;
+            this.CustomerAppointments.Location = new System.Drawing.Point(44, 381);
+            this.CustomerAppointments.Name = "CustomerAppointments";
+            this.CustomerAppointments.Size = new System.Drawing.Size(906, 329);
+            this.CustomerAppointments.TabIndex = 30;
             // 
             // CustomerDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 922);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.CustomerAppointments);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.AcceptButton);
             this.Controls.Add(this.BalanceLabel);
@@ -192,6 +192,6 @@
         private System.Windows.Forms.Label SurnameLabel;
         private System.Windows.Forms.TextBox FirstNameTextBox;
         private System.Windows.Forms.Label FirstNameLabel;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox CustomerAppointments;
     }
 }

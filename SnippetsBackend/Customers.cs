@@ -14,7 +14,7 @@ namespace SnippetsBackend
         }
         public override string ToString()
         {
-            string Customerinformation = FirstName + " " + LastName + " " + Email + " " + PhoneNumber + " ";
+            string Customerinformation = FirstName + "," + LastName + "," + Email + "," + PhoneNumber;
             return Customerinformation;
 
         }
