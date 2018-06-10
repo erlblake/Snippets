@@ -148,6 +148,8 @@ namespace snippets
         private void AcceptButton_Click(object sender, EventArgs e)
         {
             IsValidEmail(EmailText.Text);
+            IsValidName(FirstNameTextBox.Text);
+            IsValidName(SurnameText.Text); 
             if (PhoneNumberText.Text.Length != 11)
             {
                 MessageBox.Show("The length of your phone number must be 11 digits");
@@ -177,6 +179,7 @@ namespace snippets
                 EmailText.Clear();
                 PhoneNumberText.Clear();
                 HourlyRateText.Clear();
+                StylistTransactions.Items.Clear();
             }
             else if (FirstNameTextBox.Text == "" || SurnameText.Text == "" || EmailText.Text == "" || PhoneNumberText.Text == "" || HourlyRateText.Text == "")
             {
@@ -208,6 +211,15 @@ namespace snippets
             catch
             {
                 return false;
+            }
+        }
+        public void IsValidName(string name)
+        {
+            if (Regex.IsMatch(name, @"^[a-zA-Z]+$") == false)
+            {
+                MessageBox.Show("The First name and Last name must only contain letters");
+                FirstNameTextBox.Clear();
+                SurnameText.Clear();
             }
         }
 

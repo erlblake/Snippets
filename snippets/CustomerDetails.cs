@@ -22,6 +22,8 @@ namespace snippets
         private void AcceptButton_Click(object sender, EventArgs e)
         {
             IsValidEmail(EmailText.Text);
+            IsValidName(FirstNameTextBox.Text);
+            IsValidName(SurnameText.Text);
             if (PhoneNumberText.Text.Length != 11)
             {
                 MessageBox.Show("The length of your phone number must be 11 digits");
@@ -49,6 +51,7 @@ namespace snippets
                 SurnameText.Clear();
                 EmailText.Clear();
                 PhoneNumberText.Clear();
+                CustomerAppointments.Items.Clear();
             }
         }
 
@@ -115,7 +118,7 @@ namespace snippets
                 ReadInTextFile();
                 //Call the transactions for that stylist
                 ReadTransaction();
-                string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " " + EmailText.Text + " " + PhoneNumberText.Text + " ";
+                string stylistinfo = FirstNameTextBox.Text + "," + SurnameText.Text + "," + EmailText.Text + "," + PhoneNumberText.Text;
                 for (int i = 0; i < ListofCustomers.Count; i++)
                 {
                     if (ListofCustomers[i].ToString() == stylistinfo)
@@ -151,6 +154,15 @@ namespace snippets
             catch
             {
                 return false;
+            }
+        }
+        public void IsValidName(string name)
+        {
+            if(Regex.IsMatch(name, @"^[a-zA-Z]+$") == false)
+            {
+                MessageBox.Show("The First name and Last name must only contain letters");
+                FirstNameTextBox.Clear();
+                SurnameText.Clear();
             }
         }
 
@@ -201,6 +213,14 @@ namespace snippets
             {
                 CustomerAppointments.Items.Add("Customer has no appointments");
             }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Hide();
+            CustomersSelectionFormcs CSF = new CustomersSelectionFormcs();
+            CSF.Show();
+            CSF.Closed += (s, args) => Close();
         }
     }
 }

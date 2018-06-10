@@ -49,27 +49,34 @@ namespace snippets
         public static string CustomerLastName;
         private void EditCustomerButton_Click(object sender, EventArgs e)
         {
-            string[] name = CustomerSelectionListBox.Text.Split(' ');
-
-            for (int i = 0; i < name.Length; i++)
+            if (CustomerSelectionListBox.SelectedIndex > -1)
             {
-                switch (i)
+                string[] name = CustomerSelectionListBox.Text.Split(' ');
+
+                for (int i = 0; i < name.Length; i++)
                 {
-                    case 0:
-                        CustomerFirstName = name[i];
-                        break;
-                    case 1:
-                        CustomerLastName = name[i];
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            CustomerFirstName = name[i];
+                            break;
+                        case 1:
+                            CustomerLastName = name[i];
+                            break;
+                    }
                 }
+                edit = true;
+                Hide();
+                CustomerDetails Customer = new CustomerDetails();
+                Customer.EditCustomerClicked();
+                Customer.Closed += (s, args) => this.Close();
+                Customer.Show();
+                edit = true;
             }
-            edit = true;
-            Hide();
-            CustomerDetails Customer = new CustomerDetails();
-            Customer.EditCustomerClicked();
-            Customer.Closed += (s, args) => this.Close();
-            Customer.Show();
-            edit = true;
+            else
+            {
+                MessageBox.Show("Please select a customer that you wish to edit their information");
+            }
         }
 
         private void NewCustomer_Click(object sender, EventArgs e)

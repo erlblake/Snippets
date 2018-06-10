@@ -23,77 +23,84 @@ namespace snippets
         public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
         private void Bookingbutton_Click(object sender, EventArgs e)
         {
-
-            if (dateTimePicker1.MinDate > DateTime.Today)
+            if (DropDownListofStylists.SelectedIndex > -1)
             {
-                MessageBox.Show("Please enter a date on or after today");
+                if (dateTimePicker1.MinDate > DateTime.Today)
+                {
+                    MessageBox.Show("Please enter a date on or after today");
+                }
+                else if (DurationList.SelectedIndex >= -1)
+                {
+                    MessageBox.Show("Please select a duration for the appointment");
+                }
+                else
+                {
+                    //Customer who is booking appointment
+                    string Customer = CustomersSelectionFormcs.CustomerSelected;
+                    string[] SplitnameofCustomer = Customer.Split(' ');
+                    string FirstName = "";
+                    string LastName = "";
+                    for (int i = 0; i < SplitnameofCustomer.Length; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                FirstName = SplitnameofCustomer[i];
+                                break;
+                            case 1:
+                                LastName = SplitnameofCustomer[i];
+                                break;
+                        }
+                    }
+                    string CustomerName = FirstName + " " + LastName;
+
+                    //Selected Stylist
+                    string[] stylist = DropDownListofStylists.SelectedItem.ToString().Split(' ');
+                    string StylistFirstName = "";
+                    string StylsitLastName = "";
+                    for (int i = 0; i < stylist.Length; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                StylistFirstName = stylist[i];
+                                break;
+                            case 1:
+                                StylsitLastName = stylist[i];
+                                break;
+                        }
+                    }
+                    int rate = 0;
+                    //Gets the hourly rate of the stylist
+                    if (StylistandRate.ContainsKey(DropDownListofStylists.SelectedItem.ToString()))
+                    {
+                        StylistandRate.TryGetValue(DropDownListofStylists.SelectedItem.ToString(), out rate);
+                    }
+                    //add information to transaction list
+                    List<SnippetsBackend.Transaction> ListofTransactions = new List<SnippetsBackend.Transaction>();
+                    //Adding transaction of customer 
+                    ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "with " + DropDownListofStylists.SelectedItem.ToString(), listBox1.SelectedItem.ToString(), DurationList.SelectedItem.ToString(), rate));
+                    //Adding information of stylist
+                    ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Appointment with " + CustomerName, listBox1.SelectedItem.ToString(), DurationList.SelectedItem.ToString(), rate));
+                    //write the information to a textile
+                    using (StreamWriter tw = new StreamWriter("Transactions.txt", true))
+                    {
+                        foreach (SnippetsBackend.Transaction t in ListofTransactions)
+                        {
+                            tw.WriteLine(t.FirstName + "," + t.LastName + "," + t.ChairOrAppointment + "," + t.DateandTime + "," + t.Duration + "," + t.Rate);
+
+                        }
+                        tw.Close();
+                    }
+                }
             }
-            else if (DropDownListofStylists.SelectedIndex < -1)
+            else
             {
                 MessageBox.Show("Please select a stylist");
             }
-            else if (DurationList.SelectedIndex < -1)
-            {
-                MessageBox.Show("Please select a duration for the appointment");
-            }
-            //Customer who is booking appointment
-            string Customer = CustomersSelectionFormcs.CustomerSelected;
-            string[] SplitnameofCustomer = Customer.Split(' ');
-            string FirstName = "";
-            string LastName = "";
-            for (int i = 0; i < SplitnameofCustomer.Length; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        FirstName = SplitnameofCustomer[i];
-                        break;
-                    case 1:
-                        LastName = SplitnameofCustomer[i];
-                        break;
-                }
-            }
-            string CustomerName = FirstName + " " + LastName;
-
-            //Selected Stylist
-            string[] stylist = DropDownListofStylists.SelectedItem.ToString().Split(' ');
-            string StylistFirstName = "";
-            string StylsitLastName = "";
-            for (int i = 0; i < stylist.Length; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        StylistFirstName = stylist[i];
-                        break;
-                    case 1:
-                        StylsitLastName = stylist[i];
-                        break;
-                }
-            }
-            int rate = 0;
-            //Gets the hourly rate of the stylist
-            if (StylistandRate.ContainsKey(DropDownListofStylists.SelectedItem.ToString()))
-            {
-                StylistandRate.TryGetValue(DropDownListofStylists.SelectedItem.ToString(), out rate);
-            }
-            //add information to transaction list
-            List<SnippetsBackend.Transaction> ListofTransactions = new List<SnippetsBackend.Transaction>();
-            //Adding transaction of customer 
-            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "with " + DropDownListofStylists.SelectedItem.ToString(), listBox1.SelectedItem.ToString(), DurationList.SelectedItem.ToString(), rate));
-            //Adding information of stylist
-            ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Appointment with " + CustomerName, listBox1.SelectedItem.ToString(), DurationList.SelectedItem.ToString(), rate));
-            //write the information to a textile
-            using (StreamWriter tw = new StreamWriter("Transactions.txt", true))
-            {
-                foreach (SnippetsBackend.Transaction t in ListofTransactions)
-                {
-                    tw.WriteLine(t.FirstName + "," + t.LastName + "," + t.ChairOrAppointment + "," + t.DateandTime + "," + t.Duration + "," + t.Rate);
-
-                }
-                tw.Close();
-            }
         }
+        
+
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
@@ -217,8 +224,11 @@ namespace snippets
         bool stylistselected = false;
         private void DropDownListofStylists_SelectedIndexChanged(object sender, EventArgs e)
         {
-            stylistselected = true;
-            StylistDropDownList();
+            if (DropDownListofStylists.SelectedIndex > -1)
+            {
+                stylistselected = true;
+                StylistDropDownList();
+            }
         }
     }
 }
