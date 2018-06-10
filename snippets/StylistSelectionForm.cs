@@ -41,6 +41,7 @@ namespace snippets
 
             }
             edit = true;
+            StylistSearch.Clear();
             Hide();
             StylistInfo Stylist = new StylistInfo();
             Stylist.EditStylistClicked();
@@ -192,6 +193,7 @@ namespace snippets
                         tw.Close();
                     }
                     MessageBox.Show("Stylist has booked a chair");
+                    StylistSearch.Clear();
                 }
             }
         }

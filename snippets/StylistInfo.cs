@@ -134,7 +134,7 @@ namespace snippets
                 ReadInTextFile();
                 //Call the transactions for that stylist
                 ReadTransaction();
-                string stylistinfo = FirstNameTextBox.Text + " " + SurnameText.Text + " " + EmailText.Text + " " + PhoneNumberText.Text + " " + HourlyRateText.Text;
+                string stylistinfo = FirstNameTextBox.Text + "," + SurnameText.Text + "," + EmailText.Text + "," + PhoneNumberText.Text + "," + HourlyRateText.Text;
                 for (int i = 0; i < ListofStylists.Count; i++)
                 {
                     if (ListofStylists[i].ToString() == stylistinfo)
