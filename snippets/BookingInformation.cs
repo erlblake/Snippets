@@ -18,7 +18,6 @@ namespace snippets
         {
             InitializeComponent();
             DropDownListInfo();
-            StylistDropDownList();
 
         }
         public Dictionary<string, int> StylistandRate = new Dictionary<string, int>();
@@ -81,9 +80,9 @@ namespace snippets
             //add information to transaction list
             List<SnippetsBackend.Transaction> ListofTransactions = new List<SnippetsBackend.Transaction>();
             //Adding transaction of customer 
-            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "with " + DropDownListofStylists.SelectedItem.ToString(), dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(FirstName, LastName, "with " + DropDownListofStylists.SelectedItem.ToString(), listBox1.SelectedItem.ToString(), DurationList.SelectedItem.ToString(), rate));
             //Adding information of stylist
-            ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Appointment with " + CustomerName, dateTimePicker1.Text, DurationList.SelectedItem.ToString(), rate));
+            ListofTransactions.Add(new SnippetsBackend.Transaction(StylistFirstName, StylsitLastName, "Appointment with " + CustomerName, listBox1.SelectedItem.ToString(), DurationList.SelectedItem.ToString(), rate));
             //write the information to a textile
             using (StreamWriter tw = new StreamWriter("Transactions.txt", true))
             {
@@ -131,6 +130,7 @@ namespace snippets
             string[] oneline;
             string RFirstName = "";
             string RLastName = "";
+            string ChairorAppointment = "";
             string RDate = "";
             int HourlyRate = 0;
             string NA = "";
@@ -149,6 +149,9 @@ namespace snippets
                         case 1:
                             RLastName = oneline[x];
                             break;
+                        case 2:
+                            ChairorAppointment = oneline[x];
+                            break;
                         case 3:
                             RDate = oneline[x];
                             break;
@@ -161,14 +164,37 @@ namespace snippets
                     }
                 }
                 //Need to check if the time has already been slected if so, needs to be removed
+
                 if (NA == "NA")
                 {
-                    if (RDate == dateTimePicker1.Value.ToShortDateString())
+                    if (stylistselected == false)
                     {
-                        string name = RFirstName + " " + RLastName;
-                        DropDownListofStylists.Items.Add(name);
-                        StylistandRate.Add(name, HourlyRate);
+                        if (RDate == dateTimePicker1.Value.ToShortDateString())
+                        {
+                            string name = RFirstName + " " + RLastName;
+                            DropDownListofStylists.Items.Add(name);
+                            StylistandRate.Add(name, HourlyRate);
+                        }
                     }
+                }
+                else if(stylistselected == true)
+                {
+                    string[] split = ChairorAppointment.Split(' ');
+                    for (int y = 0; y < split.Length; y++)
+                    {
+                        if (split[y] == "Appointment")
+                        {
+                            for (int x = 0; x < 15; x++)
+                            {
+                                if(listBox1.Items[i].ToString() == RDate)
+                                {
+                                    listBox1.Items.RemoveAt(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                
                 }
             }
         }
@@ -188,9 +214,11 @@ namespace snippets
 
         }
 
+        bool stylistselected = false;
         private void DropDownListofStylists_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            stylistselected = true;
+            StylistDropDownList();
         }
     }
 }
