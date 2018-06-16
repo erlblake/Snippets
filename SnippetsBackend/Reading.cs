@@ -11,6 +11,11 @@ namespace SnippetsBackend
     {
         public static List<Transaction> ReadTransaction()
         {
+            if (!File.Exists("Transactions.txt"))
+            {
+                //Creates the file if 
+                File.Create("Transactions.txt");
+            }
             string[] line = File.ReadAllLines("Transactions.txt");
             List<Transaction> ReadingInListOfTransactions = new List<Transaction>();
             string[] oneline;
@@ -55,6 +60,11 @@ namespace SnippetsBackend
 
         public static List<Stylist> ReadStylist()
         {
+            if (!File.Exists("ListofStylists.txt"))
+            {
+                //Creates the file if 
+                File.Create("ListofStylists.text");
+            }
             List<Stylist> ListofStylists = new List<Stylist>();
             string[] line = File.ReadAllLines("ListofStylists.txt");
             string[] oneline;
@@ -95,6 +105,11 @@ namespace SnippetsBackend
         }
         public static List<Customers> ReadCustomers()
         {
+            if (!File.Exists("ListofCustomers.txt"))
+            {
+                //Creates the file if 
+                File.Create("ListofCustomers.text");
+            }
             List<Customers> ListofCustomers = new List<Customers>();
             string[] line = File.ReadAllLines("ListofCustomers.txt");
             string[] oneline;
